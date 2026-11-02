@@ -1,3 +1,7 @@
+import {useShopping} from '../shopping/useShopping';
+import {totals} from '../shopping/pricing';
+import {openRetail} from '../shopping/actions';
+import {departmentById} from '../catalogue/departments';
 import { useEffect, useRef, useState } from 'react';
 import { clearInput, input, useExplorer } from '../stores/useExplorer';
 import { audio } from '../game/audio';
@@ -11,11 +15,12 @@ export function begin() {
 function pause() { clearInput(); useExplorer.getState().setMode('paused'); if(document.pointerLockElement)document.exitPointerLock(); }
 function Brand() {return <div className="brand"><span className="brand-symbol"><i/><i/><i/></span><span>SUPERMARKET<span className="brand-sub">E X P L O R E R</span></span></div>;}
 function Header() {
+  const cart=useShopping(s=>s.cart);const count=totals(cart).quantity;
   const indoors=useExplorer(s=>s.position[1]<0); const mode=useExplorer(s=>s.mode); const setPanel=useExplorer(s=>s.setPanel); const section=useExplorer(s=>s.section);
   const open=(panel:'settings'|'controls')=>{if(mode==='playing')pause();setPanel(panel);};
   return <header className={`header ${mode==='playing'?'header-game':''}`}><Brand/>
-    {mode==='welcome'?<nav aria-label="Experience navigation"><span className="nav-active">The experience</span><button onClick={()=>useExplorer.setState(s=>({mapOpen:!s.mapOpen}))}>Store overview <Icon name="map" size={14}/></button><button onClick={()=>open('controls')}>Controls <Icon name="help" size={14}/></button></nav>:<div className="location"><span className="live-dot"/>{mode==='paused'?'EXPERIENCE PAUSED':section?`SECTION ${String(section).padStart(2,'0')}`:indoors?'CENTRAL AISLE':'ENTRANCE FORECOURT'}</div>}
-    <div className="header-actions">{mode==='welcome'?<span className="status-pill"><span className="live-dot"/> REAL-TIME 3D</span>:<><button className="icon-button" aria-label="Store overview" onClick={()=>useExplorer.setState(s=>({mapOpen:!s.mapOpen}))}><Icon name="map"/></button><button className="icon-button" aria-label="Pause experience" onClick={pause}><Icon name="pause"/></button></>}<button className="icon-button" aria-label="Settings" onClick={()=>open('settings')}><Icon name="settings"/></button></div>
+    {mode==='welcome'?<nav aria-label="Experience navigation"><span className="nav-active">The experience</span><button onClick={()=>useExplorer.setState(s=>({mapOpen:!s.mapOpen}))}>Store overview <Icon name="map" size={14}/></button><button onClick={()=>open('controls')}>Controls <Icon name="help" size={14}/></button></nav>:<div className="location"><span className="live-dot"/>{mode==='paused'?'EXPERIENCE PAUSED':section?departmentById(section).shortName:indoors?'CENTRAL AISLE':'ENTRANCE FORECOURT'}</div>}
+    <div className="header-actions">{mode==='welcome'?<span className="status-pill"><span className="live-dot"/> REAL-TIME 3D</span>:<><button className="icon-button" aria-label="Search products" onClick={()=>openRetail('search')}><Icon name="search"/></button><button className="icon-button cart-hud-button" aria-label={`Shopping cart, ${count} items`} onClick={()=>openRetail('cart')}><Icon name="cart"/><span className="cart-count">{count}</span></button><button className="icon-button" aria-label="Store overview" onClick={()=>openRetail('map')}><Icon name="map"/></button><button className="icon-button" aria-label="Pause experience" onClick={pause}><Icon name="pause"/></button></>}<button className="icon-button" aria-label="Settings" onClick={()=>open('settings')}><Icon name="settings"/></button></div>
   </header>;
 }
 function Welcome() {
@@ -25,13 +30,13 @@ function Welcome() {
     <main className="hero"><div className="eyebrow"><span className="short-rule"/> STEP INSIDE SOMETHING NEW</div>
       <h1>A space for<br/><em>possibility.</em></h1>
       <p className="hero-lead">Explore a new way to<br/>experience retail.</p>
-      <p className="hero-copy">An open door. Eight empty sections.<br/>A whole new perspective. Make yourself at home.</p>
+      <p className="hero-copy">An open door. Eight stocked departments.<br/>A whole new perspective. Make yourself at home.</p>
       <button className="enter-button" onClick={begin} disabled={!ready||!!error}>{error?'GRAPHICS UNAVAILABLE':ready?'ENTER SUPERMARKET':'PREPARING YOUR EXPERIENCE'}<span>{ready?<Icon name="arrow" size={23}/>:<span className="spinner"/>}</span></button>
       <div className="entry-note"><Icon name="expand" size={13}/> Best explored on desktop · Headphones recommended</div>
-      <div className="hero-detail"><span className="detail-number">08</span><span>EMPTY SECTIONS<br/><b>One connected space.</b></span><span className="detail-divider"/><Icon name="door" size={29}/><span>AUTOMATIC ENTRANCE<br/><b>Your exploration starts here.</b></span></div>
+      <div className="hero-detail"><span className="detail-number">08</span><span>STOCKED DEPARTMENTS<br/><b>One connected space.</b></span><span className="detail-divider"/><Icon name="door" size={29}/><span>AUTOMATIC ENTRANCE<br/><b>Your exploration starts here.</b></span></div>
     </main>
     <div className="scene-caption"><span className="caption-index">01 / THE ARRIVAL</span><span>A warm welcome.<br/>An open invitation.</span><span className="caption-line"/></div>
-    <footer className="welcome-footer"><span>DESIGNED TO BE EXPLORED.</span><div><span className="live-dot"/> ARCHITECTURE FIRST. POSSIBILITIES NEXT.</div><span className="footer-end">WALK IN. LOOK AROUND. IMAGINE.</span></footer>
+    <footer className="welcome-footer"><span>DESIGNED TO BE EXPLORED.</span><div><span className="live-dot"/> FRESH FINDS. THOUGHTFUL ESSENTIALS.</div><span className="footer-end">WALK IN. LOOK AROUND. IMAGINE.</span></footer>
   </div>;
 }
 export function StoreMap() {
@@ -42,16 +47,17 @@ export function StoreMap() {
   </div><div className="map-key"><span><i/> YOUR POSITION</span><span>{visited.length} / 8 EXPLORED</span></div></div>;
 }
 function Hud() {
+  const section=useExplorer(s=>s.section);const coarse=matchMedia('(pointer: coarse)').matches;
   const prompt=useExplorer(s=>s.prompt); const doorOpen=useExplorer(s=>s.doorOpen); const target=useExplorer(s=>s.target); const master=useExplorer(s=>s.settings.master);
   const position=useExplorer(s=>s.position);
   return <><div className={`crosshair ${target?'active':''}`}><span/></div>
-    <div className="hud-wayfinding"><span className="eyebrow">{position[1]<0?'THE EXPLORATION':'THE ARRIVAL'}</span><span>{position[1]<0?'A space to discover.':'Your next step is inside.'}</span></div>
-    {prompt&&<button className="interaction-prompt" onClick={()=>useExplorer.getState().interact()}><kbd>{target==='door'?'E':'i'}</kbd><span>{prompt}</span>{target==='door'&&<span className={`door-indicator ${doorOpen?'open':''}`}/>}</button>}
+    <div className="hud-wayfinding"><span className="eyebrow">{position[1]<0?'THE EXPLORATION':'THE ARRIVAL'}</span><span>{position[1]<0?(section?departmentById(section).name:'Fresh finds are waiting.'):'Your next step is inside.'}</span></div>
+    {prompt&&<button className="interaction-prompt" onClick={()=>useExplorer.getState().interact()}><kbd>{coarse?'↗':'E'}</kbd><span>{coarse?prompt.replace('PRESS E TO ','TAP TO ').replace('E TO INSPECT','TAP TO INSPECT').replace('E · ','TAP · '):prompt}</span>{target==='door'&&<span className={`door-indicator ${doorOpen?'open':''}`}/>}</button>}
     <div className="game-footer"><div className="key-guide"><span><kbd>W</kbd><span className="wasd-bottom"><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd></span></span><span>MOVE</span><span className="guide-divider"/><span>MOUSE <b>LOOK</b></span><span><kbd>E</kbd> INTERACT</span><span><kbd>ESC</kbd> PAUSE</span></div><div className="game-tools"><button className="icon-button" aria-label={master?'Mute audio':'Unmute audio'} onClick={()=>useExplorer.getState().setSettings({master:master?0:.45})}><Icon name={master?'volume':'mute'}/></button><span>EXPLORE AT YOUR OWN PACE</span></div></div>
   </>;
 }
 function Controls() {
-  return <div className="controls-list">{[['W A S D','Move through the space'],['MOUSE','Look around · drag if unlocked'],['SHIFT','Walk a little faster'],['E','Open or close the entrance'],['ESC','Pause your experience'],['M','Toggle the store overview']].map(([key,text])=><div key={key}><kbd>{key}</kbd><span>{text}</span></div>)}<p>On touch screens, move with the left joystick and drag the right side to look. Tap the interaction prompt to operate the doors.</p><p>The entrance opens automatically as you approach. The safety sensor keeps it open while you pass through.</p></div>;
+  return <div className="controls-list">{[['W A S D','Move through the space'],['MOUSE','Look around · drag if unlocked'],['SHIFT','Walk a little faster'],['E','Inspect products / interact'],['ESC','Pause your experience'],['M','Toggle overview'],['F / B','Search products / shopping cart']].map(([key,text])=><div key={key}><kbd>{key}</kbd><span>{text}</span></div>)}<p>On touch screens, move with the left joystick and drag the right side to look. Tap the interaction prompt to operate the doors.</p><p>The entrance opens automatically as you approach. The safety sensor keeps it open while you pass through.</p></div>;
 }
 function Settings() {
   const s=useExplorer(st=>st.settings), set=useExplorer(st=>st.setSettings);
@@ -77,7 +83,7 @@ function Menu() {
   return <div className="modal-backdrop"><div className="menu-card" role="dialog" aria-modal="true" aria-label={panel==='main'?'Experience paused':panel==='settings'?'Settings':'Controls'} tabIndex={-1} ref={dialogRef}>
     <div className="menu-top"><span className="eyebrow">TAKE YOUR TIME</span><button className="icon-button" aria-label="Close menu" onClick={close}><Icon name="close"/></button></div>
     <h2>{panel==='main'?'A moment to pause.':panel==='settings'?'Make it your own.':'Find your way.'}</h2><p className="menu-intro">{panel==='main'?'The space will be right here when you’re ready.':panel==='settings'?'A comfortable experience starts with you.':'A few simple controls. A whole space to explore.'}</p>
-    {panel==='settings'?<Settings/>:panel==='controls'?<Controls/>:<div className="menu-actions"><button className="enter-button" onClick={begin}>RESUME EXPLORING<Icon name="arrow"/></button><button onClick={()=>{useExplorer.getState().restart();begin();}}><Icon name="restart"/>Restart experience</button><button onClick={()=>setPanel('controls')}><Icon name="help"/>Controls</button><button onClick={()=>setPanel('settings')}><Icon name="settings"/>Settings</button><button onClick={()=>{document.exitPointerLock?.();useExplorer.getState().restart('welcome');}}>Return to welcome screen <Icon name="arrow" size={17}/></button></div>}
+    {panel==='settings'?<Settings/>:panel==='controls'?<Controls/>:<div className="menu-actions"><button className="enter-button" onClick={begin}>RESUME EXPLORING<Icon name="arrow"/></button><button onClick={()=>{useExplorer.getState().restart();begin();}}><Icon name="restart"/>Restart experience</button><button onClick={()=>openRetail('cart')}><Icon name="cart"/>Shopping cart</button><button onClick={()=>openRetail('search')}><Icon name="search"/>Search products</button><button onClick={()=>openRetail('map')}><Icon name="map"/>Store map & directions</button><button onClick={()=>setPanel('controls')}><Icon name="help"/>Controls</button><button onClick={()=>setPanel('settings')}><Icon name="settings"/>Settings</button><button onClick={()=>{document.exitPointerLock?.();useExplorer.getState().restart('welcome');}}>Return to welcome screen <Icon name="arrow" size={17}/></button></div>}
     {panel!=='main'&&<button className="text-button" onClick={()=>setPanel('main')}>← {mode==='welcome'?'Back to the experience':'Back to pause menu'}</button>}
   </div></div>;
 }
@@ -88,9 +94,10 @@ function TouchControls() {
   </div>;
 }
 export function Interface() {
+  const shoppingPanel=useShopping(s=>s.panel);
   const mode=useExplorer(s=>s.mode), panel=useExplorer(s=>s.panel), mapOpen=useExplorer(s=>s.mapOpen), error=useExplorer(s=>s.error);
   return <div className={`interface mode-${mode}`}><Header/>{mode==='welcome'&&<Welcome/>}{mode==='playing'&&<><Hud/><TouchControls/></>}
     {mapOpen&&<aside className="map-card"><button className="map-close icon-button" aria-label="Close store overview" onClick={()=>useExplorer.setState({mapOpen:false})}><Icon name="close" size={16}/></button><StoreMap/></aside>}
-    {(mode==='paused'||panel!=='main')&&<Menu/>}{error&&<div role="alert" className="error-banner">{error} <button onClick={()=>location.reload()}>Reload</button></div>}
+    {(mode==='paused'||panel!=='main')&&!shoppingPanel&&<Menu/>}{error&&<div role="alert" className="error-banner">{error} <button onClick={()=>location.reload()}>Reload</button></div>}
   </div>;
 }

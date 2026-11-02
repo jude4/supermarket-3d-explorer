@@ -1,0 +1,5 @@
+export type ModelType = 'box'|'bag'|'bottle'|'glass-bottle'|'can'|'jar'|'carton'|'tub'|'tray'|'fish-tray'|'poultry-tray'|'shellfish-tray'|'mussel-tray'|'crab-tray'|'salad-tray'|'eggs'|'tube'|'spray'|'rolls'|'apple'|'banana'|'citrus'|'grapes'|'berries'|'melon'|'pineapple'|'pear'|'carrot'|'leafy'|'broccoli'|'mushroom'|'pepper'|'root'|'loaf'|'baguette'|'croissant'|'doughnut'|'muffin';
+export interface Product {
+ id:string; name:string; brand:string; department:number; category:string; priceCents:number; currency:string; unit:string; description:string; stockQuantity:number; modelType:ModelType; color:string; dimensions:[number,number,number]; imagePath:string; inspectionPath:string; atlasIndex:number; shelfLocation:{fixture:number;side:number;level:number;slot:number}; isPromoted:boolean; discountPercent:number; storage:string; origin:string; ingredients?:string; allergens?:string; nutrition?:string; barcode:string;
+}
+export interface Department {id:number;name:string;shortName:string;color:string;display:'produce'|'bakery'|'chilled'|'gondola'|'freezer'}

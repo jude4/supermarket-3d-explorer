@@ -1,6 +1,8 @@
 import type { CSSProperties } from 'react';
 export function Icon({ name, size=20, style }: { name: string; size?: number; style?: CSSProperties }) {
   const paths: Record<string, React.ReactNode> = {
+    cart:<><path d="M3 4h2l3 12h11l2-9H6m3 13h.1m9 0h.1"/><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/></>,
+    search:<><circle cx="10" cy="10" r="6"/><path d="m15 15 6 6"/></>,
     arrow:<><path d="M4 12h15m-6-6 6 6-6 6"/></>,
     expand:<><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></>,
     volume:<><path d="m11 5-6 4H2v6h3l6 4V5Zm4 3a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14"/></>,

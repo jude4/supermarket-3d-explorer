@@ -1,3 +1,7 @@
+import {productById} from '../catalogue/catalogue';
+import {money,unitPrice} from '../shopping/pricing';
+import {useShopping} from '../shopping/useShopping';
+import {facilityById} from '../retail/facilities';
 import { useEffect, useRef } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import { PointerLockControls } from '@react-three/drei';
@@ -22,14 +26,16 @@ export function Player() {
       if(['KeyW','KeyA','KeyS','KeyD','ShiftLeft','ShiftRight','Space'].includes(e.code))e.preventDefault();
       input.keys.add(e.code);
       if(!e.repeat && e.code==='KeyE')useExplorer.getState().interact();
-      if(!e.repeat && e.code==='KeyM')useExplorer.setState(s=>({mapOpen:!s.mapOpen}));
+      if(!e.repeat&&['KeyB','KeyF','KeyM'].includes(e.code)){clearInput();useExplorer.getState().setMode('paused');document.exitPointerLock?.();useShopping.getState().open(e.code==='KeyB'?'cart':e.code==='KeyM'?'map':'search');}
       if(e.code==='Escape'){clearInput();useExplorer.getState().setMode('paused');if(document.pointerLockElement)document.exitPointerLock();}
     }
+    const click=(e:MouseEvent)=>{if(document.pointerLockElement&&e.button===0&&useExplorer.getState().target?.startsWith('product:'))useExplorer.getState().interact();};
+    window.addEventListener('mousedown',click);
     const up=(e:KeyboardEvent)=>input.keys.delete(e.code);
     const blur=()=>{ clearInput(); if(useExplorer.getState().mode==='playing'){document.exitPointerLock?.(); useExplorer.getState().setMode('paused');} };
     window.addEventListener('keydown',down); window.addEventListener('keyup',up); window.addEventListener('blur',blur);
     const visibility=()=>{if(document.hidden)blur();}; document.addEventListener('visibilitychange',visibility);
-    return ()=>{window.removeEventListener('keydown',down);window.removeEventListener('keyup',up);window.removeEventListener('blur',blur);document.removeEventListener('visibilitychange',visibility);};
+    return ()=>{window.removeEventListener('mousedown',click);window.removeEventListener('keydown',down);window.removeEventListener('keyup',up);window.removeEventListener('blur',blur);document.removeEventListener('visibilitychange',visibility);};
   },[]);
   useBeforePhysicsStep(world=>{
     const b=body.current;if(!b||useExplorer.getState().mode!=='playing')return;
@@ -57,19 +63,23 @@ export function Player() {
     const p=b.translation(); const moving=Math.hypot(v.x,v.z)>.35;
     const bob=s.settings.motion&&moving?Math.sin(performance.now()*.011)*.018:0;
     camera.position.set(p.x,p.y+.8+bob,p.z);
-    if(moving){steps.current+=dt; if(steps.current>(speed>3?.32:.48)){audio.play('footstep');steps.current=0;}}
+    if(moving){steps.current+=dt; if(steps.current>(speed>3?.32:.48)){audio.play('footstep');if(useShopping.getState().equipment==='trolley')audio.play('trolley');steps.current=0;}}
     report.current+=dt;
     if(report.current>.07){
       report.current=0;
       const section=p.z< -3&&Math.abs(p.x)>3?sections.find(section=>Math.abs(section.x-p.x)<5.3&&Math.abs(section.z-p.z)<3.7):undefined;
       const visited=section&&!s.visited.includes(section.id)?[...s.visited,section.id]:s.visited;
       ray.setFromCamera(center,camera); ray.far=8;
-      const hit=ray.intersectObjects(scene.children,true).find(h=>h.object.type==='Mesh' || h.object.type==='InstancedMesh' || 'instanceKey' in h.object);
-      const id=hit?.object.userData.interactive as string|undefined;
+      const hit=ray.intersectObjects(scene.children,true).find(h=>!h.object.userData.rayPassThrough&&(h.object.type==='Mesh' || h.object.type==='InstancedMesh' || 'instanceKey' in h.object));
+      let id=hit?.object.userData.interactive as string|undefined;
+      if(hit?.instanceId!==undefined&&hit.object.userData.products){id=hit.distance<3?`product:${hit.object.userData.products[hit.instanceId]}`:undefined;}
       const door=id==='door'&&hit!.distance<5;
-      const prompt=door?(s.doorBlocked?'DOORWAY SAFETY ACTIVE':`PRESS E TO ${s.doorOpen?'CLOSE':'OPEN'} DOORS`):id?.startsWith('section:')?`SECTION ${id.split(':')[1].padStart(2,'0')}`:'';
+      const product=id?.startsWith('product:')?productById(id.slice(8)):undefined;
+      const facility=id?.startsWith('facility:')&&hit!.distance<4?facilityById(id.slice(9)):undefined;
+      if(id?.startsWith('facility:')&&!facility)id=undefined;
+      const prompt=product?`${product.name} · ${money(unitPrice(product))} · E TO INSPECT`:facility?`E · ${facility.name.toUpperCase()}`:door?(s.doorBlocked?'DOORWAY SAFETY ACTIVE':`PRESS E TO ${s.doorOpen?'CLOSE':'OPEN'} DOORS`):id?.startsWith('section:')?sections[Number(id.split(':')[1])-1].label:'';
       euler.setFromQuaternion(camera.quaternion);
-      useExplorer.setState({position:[p.x,p.z],yaw:euler.y,section:section?.id??null,visited,prompt,target:door?'door':id??null});
+      useExplorer.setState({position:[p.x,p.z],yaw:euler.y,section:section?.id??null,visited,prompt,targetCopy:hit?.instanceId!==undefined?(hit.object.userData.copies?.[hit.instanceId]??0):0,target:door?'door':id??null});
     }
   });
   return <><RigidBody ref={body} name="player" colliders={false} position={[0,.9,12]} enabledRotations={[false,false,false]} ccd linearDamping={0} friction={0} restitution={0} canSleep={false}><CapsuleCollider args={[.55,.3]} friction={0} frictionCombineRule={rapier.CoefficientCombineRule.Min}/></RigidBody>

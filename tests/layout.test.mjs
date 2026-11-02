@@ -1,10 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
+import {departments} from '../src/catalogue/departments.ts';
 import {sections,fixtures,START} from '../src/data/layout.ts';
-test('eight unique placeholder sections, four on each side, with outside spawn',()=>{
+test('eight unique departments, four on each side, with outside spawn',()=>{
  assert.equal(sections.length,8);assert.equal(new Set(sections.map(s=>s.label)).size,8);
- assert.deepEqual(sections.map(s=>s.label),Array.from({length:8},(_,i)=>`SECTION ${String(i+1).padStart(2,'0')}`));
+ assert.deepEqual(sections.map(s=>s.label),departments.map(d=>d.shortName));
  assert.equal(sections.filter(s=>s.x<0).length,4);assert.equal(sections.filter(s=>s.x>0).length,4);
  assert.ok(START.z>4.6);assert.equal(START.x,0);assert.equal(START.y,1.65);
 });

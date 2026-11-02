@@ -16,9 +16,9 @@ function Solid({ position, size, color }: { position: V3; size: V3; color?: stri
 }
 function Floor() {
   const original = useTexture('/textures/limestone-tile.png');
-  const tile = useMemo(() => { const t=original.clone(); t.wrapS=t.wrapT=RepeatWrapping; t.repeat.set(28,40); t.colorSpace=SRGBColorSpace; t.anisotropy=8; return t; }, [original]);
+  const tile = useMemo(() => { const t=original.clone(); t.wrapS=t.wrapT=RepeatWrapping; t.repeat.set(28,54); t.colorSpace=SRGBColorSpace; t.anisotropy=8; return t; }, [original]);
   useEffect(()=>()=>tile.dispose(),[tile]);
-  return <><RigidBody type="fixed" colliders={false}><CuboidCollider args={[30,.2,40]} position={[0,-.2,-12]}/></RigidBody><mesh rotation={[-Math.PI/2,0,0]} position={[0,.005,-20]} receiveShadow><planeGeometry args={[28,40]}/><meshStandardMaterial map={tile} roughness={.36} metalness={.12}/></mesh>
+  return <><RigidBody type="fixed" colliders={false}><CuboidCollider args={[30,.2,47]} position={[0,-.2,-20]}/></RigidBody><mesh rotation={[-Math.PI/2,0,0]} position={[0,.005,-27]} receiveShadow><planeGeometry args={[28,54]}/><meshStandardMaterial map={tile} roughness={.36} metalness={.12}/></mesh>
     <Box position={[0,-.09,11]} size={[43,.18,22]} color="#c6c5b9"/>
     {Array.from({length:12},(_,i)=><Box key={i} position={[0,.008,i*1.8+1]} size={[43,.012,.018]} color="#b3b4a9"/>)}
     {Array.from({length:23},(_,i)=><Box key={i} position={[-21+i*1.8,.009,11]} size={[.018,.012,22]} color="#b5b6ad"/>)}
@@ -35,15 +35,15 @@ function Glass({ x, width }: { x: number; width: number }) {
 }
 function Exterior() {
   return <group>
-    <Solid position={[-14.25,2.9,-19.8]} size={[.5,5.8,40.4]}/><Solid position={[14.25,2.9,-19.8]} size={[.5,5.8,40.4]}/>
-    <Solid position={[0,2.9,-40]} size={[29,5.8,.4]}/>
+    <Solid position={[-14.25,2.9,-27]} size={[.5,5.8,54.4]}/><Solid position={[14.25,2.9,-27]} size={[.5,5.8,54.4]}/>
+    <Solid position={[0,2.9,-54]} size={[29,5.8,.4]}/>
     <RigidBody type="fixed" colliders={false}><CuboidCollider position={[-9.2,1.85,0]} args={[5,1.85,.11]}/><CuboidCollider position={[9.2,1.85,0]} args={[5,1.85,.11]}/></RigidBody>
     {/* Glass storefront extends to the door pockets; glazing remains collidable. */}
     <Glass x={-8.9} width={9.4}/><Glass x={8.9} width={9.4}/>
     <RigidBody type="fixed" colliders={false}><CuboidCollider position={[-3.15,1.85,0]} args={[1.05,1.85,.09]}/><CuboidCollider position={[3.15,1.85,0]} args={[1.05,1.85,.09]}/></RigidBody>
     {[-3.15,3.15].map(x=><Glass key={x} x={x} width={2.04}/>)}
     <Box position={[0,4.65,0]} size={[29,1.9,.55]} color="#e4e1d4"/>
-    <Box position={[0,5.68,-19.8]} size={[29,.3,40.5]} color="#d4d5cb"/>
+    <Box position={[0,5.68,-27]} size={[29,.3,54.5]} color="#d4d5cb"/>
     <Box position={[0,3.72,1.2]} size={[29,.18,2.8]} color="#879587" metal={.4}/>
     <Box position={[0,3.62,1.2]} size={[28.6,.035,2.4]} color="#e4decc"/>
     <Box position={[0,3.59,2.48]} size={[28,.025,.06]} color="#fff4d7" emissive="#fff2d0"/>
@@ -63,19 +63,19 @@ function Exterior() {
       {Array.from({length:25},(_,i)=><mesh key={i} position={[x+Math.sin(i*3)*.55,.95+(i%3)*.08,-3+(i%13)*.83]}><icosahedronGeometry args={[.58,1]}/><meshStandardMaterial color={i%2?'#677c56':'#82916a'} roughness={1}/></mesh>)}
     </group>)}
     {/* Invisible outer boundary keeps the forecourt in the intended playable area. */}
-    <RigidBody type="fixed" colliders={false}><CuboidCollider args={[22,3,.25]} position={[0,3,21]}/><CuboidCollider args={[22,3,.25]} position={[0,3,-41]}/><CuboidCollider args={[.25,3,31]} position={[-21,3,-10]}/><CuboidCollider args={[.25,3,31]} position={[21,3,-10]}/></RigidBody>
+    <RigidBody type="fixed" colliders={false}><CuboidCollider args={[22,3,.25]} position={[0,3,21]}/><CuboidCollider args={[22,3,.25]} position={[0,3,-55]}/><CuboidCollider args={[.25,3,38]} position={[-21,3,-17]}/><CuboidCollider args={[.25,3,38]} position={[21,3,-17]}/></RigidBody>
   </group>;
 }
 function Interior() {
   return <group>
-    <Box position={[0,5.25,-20]} size={[28,.12,40]} color="#e5e5db"/>
-    {Array.from({length:11},(_,i)=><Box key={`beam${i}`} position={[0,5.12,-i*4+.2]} size={[28,.14,.055]} color="#bfc5b9"/>)}
-    {Array.from({length:8},(_,i)=><Box key={`rail${i}`} position={[-13+i*3.8,5.12,-20]} size={[.045,.12,40]} color="#c0c6ba"/>)}
-    {Array.from({length:10},(_,i)=>[-9,0,9].map(x=><group key={`${i}${x}`}>
+    <Box position={[0,5.25,-27]} size={[28,.12,54]} color="#e5e5db"/>
+    {Array.from({length:14},(_,i)=><Box key={`beam${i}`} position={[0,5.12,-i*4+.2]} size={[28,.14,.055]} color="#bfc5b9"/>)}
+    {Array.from({length:8},(_,i)=><Box key={`rail${i}`} position={[-13+i*3.8,5.12,-27]} size={[.045,.12,54]} color="#c0c6ba"/>)}
+    {Array.from({length:13},(_,i)=>[-9,0,9].map(x=><group key={`${i}${x}`}>
       <Box position={[x,5.04,-2-i*4]} size={[2.1,.1,.68]} color="#9fa99b" metal={.4}/>
       <Box position={[x,4.974,-2-i*4]} size={[1.98,.025,.57]} color="#fffbe8" emissive="#fff5db"/>
     </group>))}
-    {[-13.85,13.85].map(x=><group key={x}><Box position={[x,.13,-20]} size={[.12,.26,39.8]} color="#7f8a7b" metal={.4}/><Box position={[x,3.45,-20]} size={[.09,.28,39.8]} color="#c2cbb8"/>
+    {[-13.85,13.85].map(x=><group key={x}><Box position={[x,.13,-27]} size={[.12,.26,53.8]} color="#7f8a7b" metal={.4}/><Box position={[x,3.45,-27]} size={[.09,.28,53.8]} color="#c2cbb8"/>
       {[-4,-20,-36].map(z=><Solid key={z} position={[x,2.5,z]} size={[.35,5,.45]} color="#d3d7c8"/>)}
     </group>)}
     {sections.map(s=><group key={s.id}>
@@ -87,7 +87,7 @@ function Interior() {
     </group>)}
     <Sign text="01 — 04     ←       →     05 — 08" width={5.8} height={.52} position={[0,3.8,-3.2]} background="#dedfd0" color="#324e3a"/>
     <Sign text="EXIT   ↓" width={2.5} height={.5} position={[0,3.25,-.25]} rotation={[0,Math.PI,0]} background="#244b3c"/>
-    <Sign text="SUPERMARKET EXPLORER" sub="A SPACE FOR POSSIBILITY" width={9} height={1.5} position={[0,2.9,-39.75]} background="#e8e6db" color="#526a50"/>
+    <Sign text="SUPERMARKET EXPLORER" sub="A SPACE FOR POSSIBILITY" width={9} height={1.5} position={[0,3.7,-53.75]} background="#e8e6db" color="#526a50"/>
   </group>;
 }
 export function Architecture() { return <><Floor/><Exterior/><Interior/></>; }

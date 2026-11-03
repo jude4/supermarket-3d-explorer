@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: supermarket-explorer-api
+    runtime: docker
+    plan: starter
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3001
+      - key: ALLOWED_ORIGINS
+        value: https://supermarket-3d-explorer.vercel.app
+      - key: DATABASE_URL
+        sync: false

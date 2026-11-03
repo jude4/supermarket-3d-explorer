@@ -3,6 +3,11 @@ import {resolve} from 'node:path';
 import {prisma} from '../src/db';
 
 type RecordData=Record<string,any>;
+let seedOperation='load seed';
+const seedPrisma=prisma.$extends({query:{$allModels:{$allOperations({model,operation,args,query}){
+ seedOperation=`${model}.${operation}`;
+ return query(args);
+}}}});
 function stamp(row:RecordData,field:string,offsetField:string,now:Date):Date|null {
  const offset=row[offsetField];
  if(typeof offset==='number'&&Number.isFinite(offset))return new Date(now.getTime()+offset*86400000);
@@ -15,7 +20,7 @@ async function main(){
  const batchesBySku=new Map<string,RecordData[]>();for(const batch of seed.batches){const rows=batchesBySku.get(batch.skuId)||[];rows.push(batch);batchesBySku.set(batch.skuId,rows);}
  const variations=new Map<string,RecordData>((seed.productVariants||[]).map((row:RecordData)=>[row.id,row]));
  const now=new Date();
- const result=await prisma.$transaction(async tx=>{
+ const result=await seedPrisma.$transaction(async tx=>{
   // Same lock as stock/cart operations: two setup jobs cannot receive the seed twice.
   await tx.$queryRaw`SELECT pg_advisory_xact_lock(903314002)::text`;
   const actor=await tx.user.upsert({where:{id:'system-seed'},create:{id:'system-seed',email:'seed-system@example.test',name:'Demonstration seed system',role:'STOCK_CLERK',passwordHash:null},update:{}});
@@ -52,4 +57,10 @@ async function main(){
  },{isolationLevel:'Serializable',maxWait:30000,timeout:120000});
  console.log(`Seed complete: ${result.created} SKUs created, ${result.unchanged} existing SKUs preserved, ${result.received} initial units received. No staff passwords or credentials were created.`);
 }
-main().catch(error=>{console.error('Seed failed:',error?.code||error?.name||'UnknownError');process.exitCode=1;}).finally(()=>prisma.$disconnect());
+main().catch(error=>{
+ console.error('Seed failed:',error?.code||error?.name||'UnknownError');
+ console.error('Seed operation:',seedOperation);
+ // Log only database identifiers, never the connection URL or complete error object.
+ for(const key of ['modelName','field_name','constraint'])if(error?.meta?.[key]!==undefined)console.error(`Seed ${key}:`,error.meta[key]);
+ process.exitCode=1;
+}).finally(()=>prisma.$disconnect());

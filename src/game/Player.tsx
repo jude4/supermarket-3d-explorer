@@ -73,6 +73,7 @@ export function Player() {
       const hit=ray.intersectObjects(scene.children,true).find(h=>!h.object.userData.rayPassThrough&&(h.object.type==='Mesh' || h.object.type==='InstancedMesh' || 'instanceKey' in h.object));
       let id=hit?.object.userData.interactive as string|undefined;
       if(hit?.instanceId!==undefined&&hit.object.userData.products){id=hit.distance<3?`product:${hit.object.userData.products[hit.instanceId]}`:undefined;}
+      if(id?.startsWith('product:')&&hit!.distance>=3)id=undefined;
       const door=id==='door'&&hit!.distance<5;
       const product=id?.startsWith('product:')?productById(id.slice(8)):undefined;
       const facility=id?.startsWith('facility:')&&hit!.distance<4?facilityById(id.slice(9)):undefined;

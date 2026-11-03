@@ -166,6 +166,12 @@ The inventory browser test requires the isolated 5175 frontend. It exercises rea
 
 Browser suites use system Chromium (`/usr/bin/chromium`, override with `CHROMIUM_PATH`). Run browser suites sequentially when using software rendering. Development walkthrough tests use dev-only inspection hooks to position the real capsule for collision cases; production builds exclude those hooks. Software rendering validates behavior and shader compilation, not real-device frame rates. `test:retail` is a compatibility alias for the current inventory browser suite.
 
+## Visual asset pilot
+
+Five Blender-authored GLBs now cover water bottles, drink cans, milk cartons, cereal boxes and cleaning sprays. Matching nearby shelf facings and inspection use the imported models, with original fictional artwork and separate PBR regions. Other catalogue families retain their existing representations. See [VISUAL_QUALITY.md](VISUAL_QUALITY.md) for the audit, LOD limits, provenance, acceptance process and remaining quality gaps. This is not a claim that the full store is photorealistic.
+
+Run `npm run assets:premium` to rebuild the five assets with Blender, and `npm run test:visual` against the running local application to capture acceptance views. Normal installation/build uses the checked-in assets and does not require Blender or Pillow.
+
 ## Source and assets
 
 | Location | Responsibility |

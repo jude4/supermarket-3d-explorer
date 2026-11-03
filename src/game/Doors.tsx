@@ -9,6 +9,7 @@ import { audio } from './audio';
 import { Sign } from './Sign';
 export const developmentDoors: {left?: RapierRigidBody; right?: RapierRigidBody} = {};
 export function Doors() {
+  const quality=useExplorer(s=>s.settings.quality);
   const left = useRef<RapierRigidBody>(null), right = useRef<RapierRigidBody>(null);
   const motion=useRef({from:0,target:0,time:0});
   const controller = useRef(newDoorState()); const progress=useRef(0); const request=useRef(0); const reset=useRef(0);
@@ -39,7 +40,7 @@ export function Doors() {
     {[-2.2,2.2].map(x=><RigidBody key={x} type="fixed" colliders={false}><CuboidCollider args={[.06,1.65,.125]} position={[x,1.65,.06]}/><Box position={[x,1.65,.06]} size={[.12,3.3,.25]} color="#68786b" metal={.8}/></RigidBody>)}
     {([-1,1] as const).map(side=><RigidBody key={side} ref={side===-1?left:right} type="kinematicPosition" position={[side*1.05,0,0]} colliders={false}>
       <CuboidCollider args={[1.04,1.6,.08]} position={[0,1.6,0]}/>
-      <mesh position={[0,1.62,.03]} userData={{interactive:'door'}}><boxGeometry args={[2.06,3.22,.06]}/><meshPhysicalMaterial color="#b9d4c5" transparent opacity={.24} roughness={.09} metalness={.25} depthWrite={false}/></mesh>
+      <mesh position={[0,1.62,.03]} userData={{interactive:'door'}}><boxGeometry args={[2.06,3.22,.06]}/><meshPhysicalMaterial color="#e7f0ec" transparent opacity={quality==='low'?.24:1} transmission={quality==='low'?0:.93} thickness={.06} ior={1.5} roughness={.07} metalness={0} envMapIntensity={1.2} depthWrite={false}/></mesh>
       {[-1.02,1.02].map(x=><Box key={x} position={[x,1.62,.05]} size={[.045,3.24,.13]} color="#5f7165" metal={.85}/>)}
       {[.06,3.2].map(y=><Box key={y} position={[0,y,.05]} size={[2.08,.07,.14]} color="#708173" metal={.8}/>)}
       <Box position={[0,1.23,.07]} size={[2.03,.15,.025]} color="#c4d5bd"/>

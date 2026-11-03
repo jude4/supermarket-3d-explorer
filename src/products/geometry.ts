@@ -110,15 +110,19 @@ export function productGeometry(type:ModelType):BufferGeometry {
  // Normalize each reusable template to the catalogue's exact footprint, resting at y=0.
  const bounds=geometry.boundingBox!,size=new Vector3();bounds.getSize(size);geometry.translate(-(bounds.min.x+bounds.max.x)/2,-bounds.min.y,-(bounds.min.z+bounds.max.z)/2);geometry.scale(1/size.x,1/size.y,1/size.z);geometry.computeBoundingBox();geometry.computeBoundingSphere();cache.set(type,geometry);return geometry;
 }
-export function productMaterial(texture:Texture,backShift=1/32){
- const material=new MeshStandardMaterial({map:texture,vertexColors:true,roughness:.36,metalness:.08,side:DoubleSide});
+export function productMaterial(texture:Texture,backShift=1/32,type?:ModelType){
+ const metal=type==='cookware'||type==='cutlery';const paper=!!type&&['box','carton','bag','rolls','eggs'].includes(type);
+ const organic=!!type&&['leafy','broccoli','banana','loaf','croissant','muffin'].includes(type);
+ const material=new MeshStandardMaterial({map:texture,vertexColors:true,roughness:metal?.25:paper?.78:organic?.85:.36,metalness:metal?.9:0,side:DoubleSide});
  material.onBeforeCompile=shader=>{
   shader.uniforms.retailBackShift={value:backShift};
   shader.vertexShader='attribute float labelMask; attribute vec4 atlasRect; varying vec2 vRetailUv; varying float vRetailLabel; uniform float retailBackShift;\n'+shader.vertexShader;
   shader.vertexShader=shader.vertexShader.replace('#include <uv_vertex>','#include <uv_vertex>\nvRetailLabel=labelMask;vRetailUv=uv*atlasRect.zw+atlasRect.xy+vec2(labelMask>1.5?retailBackShift:0.,0.);');
   shader.fragmentShader='varying vec2 vRetailUv;varying float vRetailLabel;\n'+shader.fragmentShader;
   shader.fragmentShader=shader.fragmentShader.replace('#include <map_fragment>','vec4 packageTex=texture2D(map,vRetailUv);diffuseColor*=mix(vec4(1.),packageTex,step(.5,vRetailLabel));');
+  shader.fragmentShader=shader.fragmentShader.replace('#include <roughnessmap_fragment>','#include <roughnessmap_fragment>\nroughnessFactor=mix(roughnessFactor,.6,step(.5,vRetailLabel));');
+  shader.fragmentShader=shader.fragmentShader.replace('#include <metalnessmap_fragment>','#include <metalnessmap_fragment>\nmetalnessFactor=mix(metalnessFactor,0.,step(.5,vRetailLabel));');
   shader.fragmentShader=shader.fragmentShader.replace('#include <color_fragment>','#ifdef USE_COLOR\ndiffuseColor.rgb*=mix(vColor.rgb,vec3(1.),step(.5,vRetailLabel));\n#endif');
  };
- material.customProgramCacheKey=()=>`retail-atlas-v2-${backShift}`;return material;
+ material.customProgramCacheKey=()=>`retail-atlas-v3-${backShift}-${type}`;return material;
 }

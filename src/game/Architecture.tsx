@@ -8,17 +8,17 @@ import { MatteBox, MetalBox, LightBox } from './ArchitecturalInstances';
 type V3 = [number, number, number];
 export function Box({ position, size, color = '#e8e6db', metal = 0, roughness = .65, emissive, ...rest }: { position: V3; size: V3; color?: string; metal?: number; roughness?: number; emissive?: string; rotation?: V3 }) {
   const Instance=emissive?LightBox:metal>.3?MetalBox:MatteBox;
-  void roughness;
+  if(!emissive&&roughness!==.65)return <mesh position={position} scale={size} castShadow receiveShadow {...rest}><boxGeometry/><meshStandardMaterial color={color} metalness={metal} roughness={roughness}/></mesh>;
   return <Instance position={position} scale={size} color={color} {...rest}/>;
 }
 function Solid({ position, size, color }: { position: V3; size: V3; color?: string }) {
   return <RigidBody type="fixed" colliders={false}><CuboidCollider position={position} args={[size[0]/2,size[1]/2,size[2]/2]}/><Box position={position} size={size} color={color}/></RigidBody>;
 }
 function Floor() {
-  const original = useTexture('/textures/limestone-tile.png');
-  const tile = useMemo(() => { const t=original.clone(); t.wrapS=t.wrapT=RepeatWrapping; t.repeat.set(28,54); t.colorSpace=SRGBColorSpace; t.anisotropy=8; return t; }, [original]);
-  useEffect(()=>()=>tile.dispose(),[tile]);
-  return <><RigidBody type="fixed" colliders={false}><CuboidCollider args={[30,.2,47]} position={[0,-.2,-20]}/></RigidBody><mesh rotation={[-Math.PI/2,0,0]} position={[0,.005,-27]} receiveShadow><planeGeometry args={[28,54]}/><meshStandardMaterial map={tile} roughness={.36} metalness={.12}/></mesh>
+  const [original,normal,rough]=useTexture(['/textures/limestone-tile.png','/textures/pbr/stone-normal.png','/textures/pbr/stone-roughness.png']);
+  const [tile,floorNormal,floorRough]=useMemo(()=>[original,normal,rough].map((source,i)=>{const t=source.clone();t.wrapS=t.wrapT=RepeatWrapping;t.repeat.set(28,54);if(i===0)t.colorSpace=SRGBColorSpace;t.anisotropy=8;return t;}),[original,normal,rough]);
+  useEffect(()=>()=>{tile.dispose();floorNormal.dispose();floorRough.dispose();},[tile,floorNormal,floorRough]);
+  return <><RigidBody type="fixed" colliders={false}><CuboidCollider args={[30,.2,47]} position={[0,-.2,-20]}/></RigidBody><mesh rotation={[-Math.PI/2,0,0]} position={[0,.005,-27]} receiveShadow><planeGeometry args={[28,54]}/><meshStandardMaterial map={tile} normalMap={floorNormal} roughnessMap={floorRough} roughness={.65} metalness={0}/></mesh>
     <Box position={[0,-.09,11]} size={[43,.18,22]} color="#c6c5b9"/>
     {Array.from({length:12},(_,i)=><Box key={i} position={[0,.008,i*1.8+1]} size={[43,.012,.018]} color="#b3b4a9"/>)}
     {Array.from({length:23},(_,i)=><Box key={i} position={[-21+i*1.8,.009,11]} size={[.018,.012,22]} color="#b5b6ad"/>)}
@@ -28,7 +28,7 @@ function Floor() {
   </>;
 }
 function Glass({ x, width }: { x: number; width: number }) {
-  return <group><mesh position={[x,1.85,.035]}><boxGeometry args={[width,3.7,.06]}/><meshPhysicalMaterial color="#c5d6ce" transparent opacity={.19} roughness={.09} metalness={.18} depthWrite={false}/></mesh>
+  return <group><mesh position={[x,1.85,.035]}><boxGeometry args={[width,3.7,.06]}/><meshPhysicalMaterial color="#c5d6ce" transparent opacity={.19} roughness={.09} metalness={0} ior={1.5} depthWrite={false}/></mesh>
     {[.16,1.15,2.18,3.58].map(y=><Box key={y} position={[x,y,.1]} size={[width,.055,.12]} color="#667b70" metal={.8}/>)}
     <Box position={[x,1.45,.08]} size={[width,.16,.06]} color="#c1d1bd"/>
   </group>;

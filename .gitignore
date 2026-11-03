@@ -11,3 +11,5 @@ server/.env
 server/dist/
 server/coverage/
 .local-admin.json
+
+__pycache__/

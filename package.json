@@ -24,7 +24,9 @@
     "test:api": "node ops/api-tests.mjs",
     "test:client": "node --import ./server/node_modules/tsx/dist/loader.mjs src/api/customer.test.mjs",
     "test:inventory": "node scripts/inventory-browser-test.mjs",
-    "test:admin": "node scripts/admin-browser-test.mjs"
+    "test:admin": "node scripts/admin-browser-test.mjs",
+    "assets:premium": "blender --background --python scripts/model-premium-products.py",
+    "test:visual": "node scripts/premium-browser-test.mjs"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.7",

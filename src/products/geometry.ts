@@ -22,7 +22,17 @@ export function productGeometry(type:ModelType):BufferGeometry {
  const add=(g:BufferGeometry,color='#ffffff',pos:[number,number,number]=[0,0,0],scale:[number,number,number]=[1,1,1],rot:[number,number,number]=[0,0,0],label=0)=>pieces.push(part(g,color,pos,scale,rot,label));
  const sphere=(pos:[number,number,number],scale:[number,number,number],color='#ffffff')=>add(new SphereGeometry(.5,12,8),color,pos,scale);
  const label=(cyl=false)=>{for(const back of [false,true]){const g=cyl?new CylinderGeometry(.507,.507,.46,16,1,true,-Math.PI/3,Math.PI*2/3):new PlaneGeometry(.88,.48);add(g,'#ffffff',cyl?[0,.51,0]:[0,.53,back?-.507:.507],[1,1,1],[0,back?Math.PI:0,0],back?2:1);}};
- if(['box','carton','bag','rolls','eggs','tray','fish-tray','poultry-tray','shellfish-tray','mussel-tray','crab-tray','salad-tray'].includes(type)){
+ if(type==='cookware'){
+  add(new LatheGeometry([[0,0],[.32,0],[.40,.08],[.43,.48],[.38,.52],[.33,.1],[0,.1]].map(p=>new Vector2(p[0],p[1])),20),'#a9aea5',[0,.1,0]);
+  add(new CylinderGeometry(.44,.44,.05,20),'#d8dcd2',[0,.65,0]);add(round(),'#4d5b50',[0,.74,0],[.18,.12,.12]);
+  for(const side of [-1,1])add(new TorusGeometry(.12,.035,6,12,Math.PI),'#48564c',[side*.43,.47,0],[1,1,1],[0,0,side*Math.PI/2]);
+ }else if(type==='utensil'){
+  add(round(),'#e3c796',[0,.42,0],[.10,.84,.09]);add(new SphereGeometry(.5,12,8),'#e8cf9f',[0,.87,0],[.43,.30,.12]);
+ }else if(type==='cutlery'){
+  add(round(),'#d4d9d3',[0,.38,0],[.13,.76,.07]);add(round(),'#dce0d9',[0,.76,0],[.35,.15,.07]);for(const x of [-.15,-.05,.05,.15])add(round(),'#dce0d9',[x,.9,0],[.035,.2,.04]);
+ }else if(type==='container'){
+  add(round(),'#d4ddd0',[0,.4,0],[1,.8,1]);add(round(),'#7b9672',[0,.86,0],[1.07,.14,1.07]);for(const x of [-.52,.52])add(round(),'#607d59',[x,.75,0],[.08,.21,.4]);label();
+ }else if(['box','carton','bag','rolls','eggs','tray','fish-tray','poultry-tray','shellfish-tray','mussel-tray','crab-tray','salad-tray'].includes(type)){
   if(type==='carton'){
    const s=new Shape();s.moveTo(-.5,0);s.lineTo(.5,0);s.lineTo(.5,.77);s.lineTo(.12,1);s.lineTo(-.12,1);s.lineTo(-.5,.77);s.closePath();const g=new ExtrudeGeometry(s,{depth:1,bevelEnabled:true,bevelSize:.025,bevelThickness:.025,bevelSegments:1,steps:1});g.translate(0,0,-.5);add(g);add(new CylinderGeometry(.1,.1,.04,10),'#e9e6d8',[.16,.87,.15]);label();
   }else if(type==='bag'){

@@ -7,6 +7,7 @@ import { clearInput, input, useExplorer } from '../stores/useExplorer';
 import { audio } from '../game/audio';
 import { Icon } from './Icon';
 export function begin() {
+  if(!useShopping.getState().initialized||!useShopping.getState().online){useShopping.getState().notify('Connect to the store before starting.');return;}
   clearInput(); useExplorer.getState().setMode('playing'); void audio.unlock();
   if(!matchMedia('(pointer: coarse)').matches) {
     try { const result=document.querySelector('canvas')?.requestPointerLock(); result?.catch(()=>{/* Drag-look is available when pointer lock is restricted. */}); } catch { /* Browser restrictions use drag-look. */ }
@@ -24,6 +25,7 @@ function Header() {
   </header>;
 }
 function Welcome() {
+  const connected=useShopping(s=>s.initialized&&s.online);
   const ready=useExplorer(s=>s.ready), error=useExplorer(s=>s.error);
   return <div className="welcome">
     <div className="welcome-wash"/>
@@ -31,12 +33,12 @@ function Welcome() {
       <h1>A space for<br/><em>possibility.</em></h1>
       <p className="hero-lead">Explore a new way to<br/>experience retail.</p>
       <p className="hero-copy">An open door. Eight stocked departments.<br/>A whole new perspective. Make yourself at home.</p>
-      <button className="enter-button" onClick={begin} disabled={!ready||!!error}>{error?'GRAPHICS UNAVAILABLE':ready?'ENTER SUPERMARKET':'PREPARING YOUR EXPERIENCE'}<span>{ready?<Icon name="arrow" size={23}/>:<span className="spinner"/>}</span></button>
+      <button className="enter-button" onClick={begin} disabled={!ready||!!error||!connected}>{error?'GRAPHICS UNAVAILABLE':ready&&connected?'ENTER SUPERMARKET':'PREPARING YOUR EXPERIENCE'}<span>{ready?<Icon name="arrow" size={23}/>:<span className="spinner"/>}</span></button>
       <div className="entry-note"><Icon name="expand" size={13}/> Best explored on desktop · Headphones recommended</div>
       <div className="hero-detail"><span className="detail-number">08</span><span>STOCKED DEPARTMENTS<br/><b>One connected space.</b></span><span className="detail-divider"/><Icon name="door" size={29}/><span>AUTOMATIC ENTRANCE<br/><b>Your exploration starts here.</b></span></div>
     </main>
     <div className="scene-caption"><span className="caption-index">01 / THE ARRIVAL</span><span>A warm welcome.<br/>An open invitation.</span><span className="caption-line"/></div>
-    <footer className="welcome-footer"><span>DESIGNED TO BE EXPLORED.</span><div><span className="live-dot"/> FRESH FINDS. THOUGHTFUL ESSENTIALS.</div><span className="footer-end">WALK IN. LOOK AROUND. IMAGINE.</span></footer>
+    <footer className="welcome-footer"><span>DESIGNED TO BE EXPLORED.</span><div><span className="live-dot"/> FRESH FINDS. THOUGHTFUL ESSENTIALS.</div><span className="footer-end">WALK IN. LOOK AROUND. IMAGINE. <a className="staff-link" href="/admin">Staff portal ↗</a></span></footer>
   </div>;
 }
 export function StoreMap() {

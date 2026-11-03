@@ -1,0 +1,11 @@
+import {BadRequestException} from '@nestjs/common';
+export type Input=Record<string,any>;
+export function obj(value:unknown):Input{if(!value||typeof value!=='object'||Array.isArray(value))throw new BadRequestException('A JSON object is required.');return value as Input;}
+export function text(value:unknown,name:string,max=200):string{if(typeof value!=='string'||!value.trim()||value.trim().length>max)throw new BadRequestException(`${name} is required (maximum ${max} characters).`);return value.trim();}
+export function integer(value:unknown,name:string,min=0,max=1000000):number{if(!Number.isSafeInteger(value)||(value as number)<min||(value as number)>max)throw new BadRequestException(`${name} must be an integer between ${min} and ${max}.`);return value as number;}
+export function date(value:unknown,name:string):Date|undefined{if(value===undefined||value===null||value==='')return undefined;const d=new Date(String(value));if(!Number.isFinite(d.getTime()))throw new BadRequestException(`${name} is invalid.`);return d;}
+export function dimensions(value:unknown):number[]{if(!Array.isArray(value)||value.length!==3||value.some(v=>typeof v!=='number'||!Number.isFinite(v)||v<=0||v>2))throw new BadRequestException('Dimensions must be three positive metre values, each at most 2.');return value;}
+export function shelf(value:unknown){const s=obj(value);return {fixture:integer(s.fixture,'Fixture',0,1),side:integer(s.side,'Side',0,1),level:integer(s.level,'Level',0,4),slot:integer(s.slot,'Bay',0,3)};}
+export function attributes(value:unknown){const o=obj(value??{});if(Object.keys(o).length>30||JSON.stringify(o).length>6000)throw new BadRequestException('Too many variant attributes.');for(const [k,v]of Object.entries(o))if(k.length>60||!['string','number','boolean'].includes(typeof v))throw new BadRequestException('Variant attributes must be simple named values.');return o;}
+export function optionalText(v:unknown,name:string,max=200){return v===undefined||v===null||v===''?undefined:text(v,name,max);}
+export function localAsset(v:unknown,name:string){const s=text(v,name,300);if(!s.startsWith('/')||s.startsWith('//')||s.includes('..')||/[\\\r\n]/.test(s))throw new BadRequestException(`${name} must be a local asset path.`);return s;}

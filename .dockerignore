@@ -1,0 +1,11 @@
+node_modules
+server/node_modules
+dist
+server/dist
+.git
+.local
+**/.env
+**/.local-admin.json
+**/*.tsbuildinfo
+playwright-report
+test-results

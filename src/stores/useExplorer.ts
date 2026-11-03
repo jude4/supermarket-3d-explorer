@@ -1,6 +1,6 @@
 import {shoppingSound} from '../shopping/feedback';
 import {useShopping} from '../shopping/useShopping';
-import {productById} from '../catalogue/catalogue';
+import {productById,products} from '../catalogue/catalogue';
 import {facilityById} from '../retail/facilities';
 import { create } from 'zustand';
 export interface Settings { sensitivity: number; master: number; effects: number; quality: 'low' | 'medium' | 'high'; fov: number; motion: boolean }

@@ -1,0 +1,820 @@
+{
+  "departments": [
+    {
+      "id": 1,
+      "name": "Fresh Produce",
+      "shortName": "FRESH PRODUCE",
+      "color": "#598054",
+      "display": "produce"
+    },
+    {
+      "id": 2,
+      "name": "Bakery & Breakfast",
+      "shortName": "BAKERY & BREAKFAST",
+      "color": "#b1804c",
+      "display": "bakery"
+    },
+    {
+      "id": 3,
+      "name": "Meat, Poultry & Seafood",
+      "shortName": "MEAT, POULTRY & SEAFOOD",
+      "color": "#a65e59",
+      "display": "chilled"
+    },
+    {
+      "id": 4,
+      "name": "Dairy, Chilled & Frozen",
+      "shortName": "DAIRY, CHILLED & FROZEN",
+      "color": "#6c929d",
+      "display": "chilled"
+    },
+    {
+      "id": 5,
+      "name": "Kitchen & Pantry",
+      "shortName": "KITCHEN & PANTRY",
+      "color": "#a28d52",
+      "display": "gondola"
+    },
+    {
+      "id": 6,
+      "name": "Beverages",
+      "shortName": "BEVERAGES",
+      "color": "#718ba8",
+      "display": "gondola"
+    },
+    {
+      "id": 7,
+      "name": "Snacks & Confectionery",
+      "shortName": "SNACKS & CONFECTIONERY",
+      "color": "#aa7955",
+      "display": "gondola"
+    },
+    {
+      "id": 8,
+      "name": "Household, Cleaning & Toiletries",
+      "shortName": "HOUSEHOLD, CLEANING & TOILETRIES",
+      "color": "#7e7d9a",
+      "display": "gondola"
+    }
+  ],
+  "categories": [
+    {
+      "id": "d1-fruit",
+      "departmentId": 1,
+      "name": "Fruit",
+      "slug": "fruit"
+    },
+    {
+      "id": "d1-vegetables",
+      "departmentId": 1,
+      "name": "Vegetables",
+      "slug": "vegetables"
+    },
+    {
+      "id": "d1-herbs-fresh-ingredients",
+      "departmentId": 1,
+      "name": "Herbs & Fresh Ingredients",
+      "slug": "herbs-fresh-ingredients"
+    },
+    {
+      "id": "d2-bakery",
+      "departmentId": 2,
+      "name": "Bakery",
+      "slug": "bakery"
+    },
+    {
+      "id": "d2-breakfast",
+      "departmentId": 2,
+      "name": "Breakfast",
+      "slug": "breakfast"
+    },
+    {
+      "id": "d3-meat",
+      "departmentId": 3,
+      "name": "Meat",
+      "slug": "meat"
+    },
+    {
+      "id": "d3-poultry",
+      "departmentId": 3,
+      "name": "Poultry",
+      "slug": "poultry"
+    },
+    {
+      "id": "d3-seafood",
+      "departmentId": 3,
+      "name": "Seafood",
+      "slug": "seafood"
+    },
+    {
+      "id": "d3-deli-prepared-foods",
+      "departmentId": 3,
+      "name": "Deli & Prepared Foods",
+      "slug": "deli-prepared-foods"
+    },
+    {
+      "id": "d4-dairy",
+      "departmentId": 4,
+      "name": "Dairy",
+      "slug": "dairy"
+    },
+    {
+      "id": "d4-chilled-foods",
+      "departmentId": 4,
+      "name": "Chilled Foods",
+      "slug": "chilled-foods"
+    },
+    {
+      "id": "d4-frozen-foods",
+      "departmentId": 4,
+      "name": "Frozen Foods",
+      "slug": "frozen-foods"
+    },
+    {
+      "id": "d5-grains-staples",
+      "departmentId": 5,
+      "name": "Grains & Staples",
+      "slug": "grains-staples"
+    },
+    {
+      "id": "d5-canned-preserved",
+      "departmentId": 5,
+      "name": "Canned & Preserved",
+      "slug": "canned-preserved"
+    },
+    {
+      "id": "d5-cooking-ingredients",
+      "departmentId": 5,
+      "name": "Cooking Ingredients",
+      "slug": "cooking-ingredients"
+    },
+    {
+      "id": "d5-sauces-condiments",
+      "departmentId": 5,
+      "name": "Sauces & Condiments",
+      "slug": "sauces-condiments"
+    },
+    {
+      "id": "d5-grocery-essentials",
+      "departmentId": 5,
+      "name": "Grocery Essentials",
+      "slug": "grocery-essentials"
+    },
+    {
+      "id": "d5-kitchen-equipment",
+      "departmentId": 5,
+      "name": "Kitchen Equipment",
+      "slug": "kitchen-equipment"
+    },
+    {
+      "id": "d5-kitchen-storage",
+      "departmentId": 5,
+      "name": "Kitchen Storage",
+      "slug": "kitchen-storage"
+    },
+    {
+      "id": "d6-water",
+      "departmentId": 6,
+      "name": "Water",
+      "slug": "water"
+    },
+    {
+      "id": "d6-juices",
+      "departmentId": 6,
+      "name": "Juices",
+      "slug": "juices"
+    },
+    {
+      "id": "d6-soft-drinks",
+      "departmentId": 6,
+      "name": "Soft Drinks",
+      "slug": "soft-drinks"
+    },
+    {
+      "id": "d6-energy-sports-drinks",
+      "departmentId": 6,
+      "name": "Energy & Sports Drinks",
+      "slug": "energy-sports-drinks"
+    },
+    {
+      "id": "d6-hot-drinks",
+      "departmentId": 6,
+      "name": "Hot Drinks",
+      "slug": "hot-drinks"
+    },
+    {
+      "id": "d7-snacks",
+      "departmentId": 7,
+      "name": "Snacks",
+      "slug": "snacks"
+    },
+    {
+      "id": "d7-confectionery",
+      "departmentId": 7,
+      "name": "Confectionery",
+      "slug": "confectionery"
+    },
+    {
+      "id": "d8-cleaning",
+      "departmentId": 8,
+      "name": "Cleaning",
+      "slug": "cleaning"
+    },
+    {
+      "id": "d8-laundry",
+      "departmentId": 8,
+      "name": "Laundry",
+      "slug": "laundry"
+    },
+    {
+      "id": "d8-personal-care",
+      "departmentId": 8,
+      "name": "Personal Care",
+      "slug": "personal-care"
+    },
+    {
+      "id": "d8-toiletries-hygiene",
+      "departmentId": 8,
+      "name": "Toiletries & Hygiene",
+      "slug": "toiletries-hygiene"
+    },
+    {
+      "id": "d8-baby-essentials",
+      "departmentId": 8,
+      "name": "Baby Essentials",
+      "slug": "baby-essentials"
+    },
+    {
+      "id": "d8-pet-supplies",
+      "departmentId": 8,
+      "name": "Pet Supplies",
+      "slug": "pet-supplies"
+    },
+    {
+      "id": "d8-home-essentials",
+      "departmentId": 8,
+      "name": "Home Essentials",
+      "slug": "home-essentials"
+    }
+  ],
+  "subcategories": [
+    {
+      "id": "d1-fruit-orchard-fruit",
+      "categoryId": "d1-fruit",
+      "name": "Orchard fruit",
+      "slug": "orchard-fruit"
+    },
+    {
+      "id": "d1-fruit-citrus",
+      "categoryId": "d1-fruit",
+      "name": "Citrus",
+      "slug": "citrus"
+    },
+    {
+      "id": "d1-fruit-berries-grapes",
+      "categoryId": "d1-fruit",
+      "name": "Berries & grapes",
+      "slug": "berries-grapes"
+    },
+    {
+      "id": "d1-fruit-tropical-fruit",
+      "categoryId": "d1-fruit",
+      "name": "Tropical fruit",
+      "slug": "tropical-fruit"
+    },
+    {
+      "id": "d1-vegetables-roots-alliums",
+      "categoryId": "d1-vegetables",
+      "name": "Roots & alliums",
+      "slug": "roots-alliums"
+    },
+    {
+      "id": "d1-vegetables-leafy-vegetables",
+      "categoryId": "d1-vegetables",
+      "name": "Leafy vegetables",
+      "slug": "leafy-vegetables"
+    },
+    {
+      "id": "d1-vegetables-salad-vegetables",
+      "categoryId": "d1-vegetables",
+      "name": "Salad vegetables",
+      "slug": "salad-vegetables"
+    },
+    {
+      "id": "d1-vegetables-brassicas",
+      "categoryId": "d1-vegetables",
+      "name": "Brassicas",
+      "slug": "brassicas"
+    },
+    {
+      "id": "d1-vegetables-other-vegetables",
+      "categoryId": "d1-vegetables",
+      "name": "Other vegetables",
+      "slug": "other-vegetables"
+    },
+    {
+      "id": "d1-herbs-fresh-ingredients-fresh-herbs",
+      "categoryId": "d1-herbs-fresh-ingredients",
+      "name": "Fresh herbs",
+      "slug": "fresh-herbs"
+    },
+    {
+      "id": "d1-herbs-fresh-ingredients-fresh-ingredients",
+      "categoryId": "d1-herbs-fresh-ingredients",
+      "name": "Fresh ingredients",
+      "slug": "fresh-ingredients"
+    },
+    {
+      "id": "d2-bakery-bread",
+      "categoryId": "d2-bakery",
+      "name": "Bread",
+      "slug": "bread"
+    },
+    {
+      "id": "d2-bakery-pastries-cakes",
+      "categoryId": "d2-bakery",
+      "name": "Pastries & cakes",
+      "slug": "pastries-cakes"
+    },
+    {
+      "id": "d2-bakery-wraps-rolls",
+      "categoryId": "d2-bakery",
+      "name": "Wraps & rolls",
+      "slug": "wraps-rolls"
+    },
+    {
+      "id": "d2-breakfast-cereals-oats",
+      "categoryId": "d2-breakfast",
+      "name": "Cereals & oats",
+      "slug": "cereals-oats"
+    },
+    {
+      "id": "d2-breakfast-spreads",
+      "categoryId": "d2-breakfast",
+      "name": "Spreads",
+      "slug": "spreads"
+    },
+    {
+      "id": "d2-breakfast-breakfast-mixes",
+      "categoryId": "d2-breakfast",
+      "name": "Breakfast mixes",
+      "slug": "breakfast-mixes"
+    },
+    {
+      "id": "d3-meat-fresh-meat",
+      "categoryId": "d3-meat",
+      "name": "Fresh meat",
+      "slug": "fresh-meat"
+    },
+    {
+      "id": "d3-meat-prepared-meat",
+      "categoryId": "d3-meat",
+      "name": "Prepared meat",
+      "slug": "prepared-meat"
+    },
+    {
+      "id": "d3-poultry-chicken",
+      "categoryId": "d3-poultry",
+      "name": "Chicken",
+      "slug": "chicken"
+    },
+    {
+      "id": "d3-poultry-turkey",
+      "categoryId": "d3-poultry",
+      "name": "Turkey",
+      "slug": "turkey"
+    },
+    {
+      "id": "d3-seafood-fish",
+      "categoryId": "d3-seafood",
+      "name": "Fish",
+      "slug": "fish"
+    },
+    {
+      "id": "d3-seafood-shellfish",
+      "categoryId": "d3-seafood",
+      "name": "Shellfish",
+      "slug": "shellfish"
+    },
+    {
+      "id": "d3-deli-prepared-foods-deli-meats",
+      "categoryId": "d3-deli-prepared-foods",
+      "name": "Deli meats",
+      "slug": "deli-meats"
+    },
+    {
+      "id": "d3-deli-prepared-foods-salads-dips",
+      "categoryId": "d3-deli-prepared-foods",
+      "name": "Salads & dips",
+      "slug": "salads-dips"
+    },
+    {
+      "id": "d4-dairy-milk-plant-drinks",
+      "categoryId": "d4-dairy",
+      "name": "Milk & plant drinks",
+      "slug": "milk-plant-drinks"
+    },
+    {
+      "id": "d4-dairy-yoghurt",
+      "categoryId": "d4-dairy",
+      "name": "Yoghurt",
+      "slug": "yoghurt"
+    },
+    {
+      "id": "d4-dairy-cheese",
+      "categoryId": "d4-dairy",
+      "name": "Cheese",
+      "slug": "cheese"
+    },
+    {
+      "id": "d4-dairy-butter-cream",
+      "categoryId": "d4-dairy",
+      "name": "Butter & cream",
+      "slug": "butter-cream"
+    },
+    {
+      "id": "d4-chilled-foods-eggs",
+      "categoryId": "d4-chilled-foods",
+      "name": "Eggs",
+      "slug": "eggs"
+    },
+    {
+      "id": "d4-chilled-foods-chilled-desserts",
+      "categoryId": "d4-chilled-foods",
+      "name": "Chilled desserts",
+      "slug": "chilled-desserts"
+    },
+    {
+      "id": "d4-frozen-foods-frozen-fruit-vegetables",
+      "categoryId": "d4-frozen-foods",
+      "name": "Frozen fruit & vegetables",
+      "slug": "frozen-fruit-vegetables"
+    },
+    {
+      "id": "d4-frozen-foods-frozen-meat-seafood",
+      "categoryId": "d4-frozen-foods",
+      "name": "Frozen meat & seafood",
+      "slug": "frozen-meat-seafood"
+    },
+    {
+      "id": "d4-frozen-foods-frozen-potato-sides",
+      "categoryId": "d4-frozen-foods",
+      "name": "Frozen potato sides",
+      "slug": "frozen-potato-sides"
+    },
+    {
+      "id": "d4-frozen-foods-frozen-meals-pastries",
+      "categoryId": "d4-frozen-foods",
+      "name": "Frozen meals & pastries",
+      "slug": "frozen-meals-pastries"
+    },
+    {
+      "id": "d4-frozen-foods-ice-cream-desserts",
+      "categoryId": "d4-frozen-foods",
+      "name": "Ice cream & desserts",
+      "slug": "ice-cream-desserts"
+    },
+    {
+      "id": "d5-grains-staples-rice-grains",
+      "categoryId": "d5-grains-staples",
+      "name": "Rice & grains",
+      "slug": "rice-grains"
+    },
+    {
+      "id": "d5-grains-staples-pasta-noodles",
+      "categoryId": "d5-grains-staples",
+      "name": "Pasta & noodles",
+      "slug": "pasta-noodles"
+    },
+    {
+      "id": "d5-grains-staples-baking-staples",
+      "categoryId": "d5-grains-staples",
+      "name": "Baking staples",
+      "slug": "baking-staples"
+    },
+    {
+      "id": "d5-canned-preserved-canned-vegetables",
+      "categoryId": "d5-canned-preserved",
+      "name": "Canned vegetables",
+      "slug": "canned-vegetables"
+    },
+    {
+      "id": "d5-canned-preserved-canned-fish",
+      "categoryId": "d5-canned-preserved",
+      "name": "Canned fish",
+      "slug": "canned-fish"
+    },
+    {
+      "id": "d5-canned-preserved-fruit-soups",
+      "categoryId": "d5-canned-preserved",
+      "name": "Fruit & soups",
+      "slug": "fruit-soups"
+    },
+    {
+      "id": "d5-cooking-ingredients-oils-vinegar",
+      "categoryId": "d5-cooking-ingredients",
+      "name": "Oils & vinegar",
+      "slug": "oils-vinegar"
+    },
+    {
+      "id": "d5-cooking-ingredients-seasonings",
+      "categoryId": "d5-cooking-ingredients",
+      "name": "Seasonings",
+      "slug": "seasonings"
+    },
+    {
+      "id": "d5-cooking-ingredients-baking-ingredients",
+      "categoryId": "d5-cooking-ingredients",
+      "name": "Baking ingredients",
+      "slug": "baking-ingredients"
+    },
+    {
+      "id": "d5-sauces-condiments-table-sauces",
+      "categoryId": "d5-sauces-condiments",
+      "name": "Table sauces",
+      "slug": "table-sauces"
+    },
+    {
+      "id": "d5-sauces-condiments-cooking-sauces",
+      "categoryId": "d5-sauces-condiments",
+      "name": "Cooking sauces",
+      "slug": "cooking-sauces"
+    },
+    {
+      "id": "d5-grocery-essentials-pulses",
+      "categoryId": "d5-grocery-essentials",
+      "name": "Pulses",
+      "slug": "pulses"
+    },
+    {
+      "id": "d5-grocery-essentials-nuts-seeds-dried-fruit",
+      "categoryId": "d5-grocery-essentials",
+      "name": "Nuts, seeds & dried fruit",
+      "slug": "nuts-seeds-dried-fruit"
+    },
+    {
+      "id": "d5-kitchen-equipment-cookware",
+      "categoryId": "d5-kitchen-equipment",
+      "name": "Cookware",
+      "slug": "cookware"
+    },
+    {
+      "id": "d5-kitchen-equipment-utensils",
+      "categoryId": "d5-kitchen-equipment",
+      "name": "Utensils",
+      "slug": "utensils"
+    },
+    {
+      "id": "d5-kitchen-equipment-cutlery",
+      "categoryId": "d5-kitchen-equipment",
+      "name": "Cutlery",
+      "slug": "cutlery"
+    },
+    {
+      "id": "d5-kitchen-storage-food-containers",
+      "categoryId": "d5-kitchen-storage",
+      "name": "Food containers",
+      "slug": "food-containers"
+    },
+    {
+      "id": "d5-kitchen-storage-wraps-food-bags",
+      "categoryId": "d5-kitchen-storage",
+      "name": "Wraps & food bags",
+      "slug": "wraps-food-bags"
+    },
+    {
+      "id": "d6-water-still-water",
+      "categoryId": "d6-water",
+      "name": "Still water",
+      "slug": "still-water"
+    },
+    {
+      "id": "d6-water-sparkling-mineral-water",
+      "categoryId": "d6-water",
+      "name": "Sparkling & mineral water",
+      "slug": "sparkling-mineral-water"
+    },
+    {
+      "id": "d6-juices-fruit-juices",
+      "categoryId": "d6-juices",
+      "name": "Fruit juices",
+      "slug": "fruit-juices"
+    },
+    {
+      "id": "d6-soft-drinks-carbonated-drinks",
+      "categoryId": "d6-soft-drinks",
+      "name": "Carbonated drinks",
+      "slug": "carbonated-drinks"
+    },
+    {
+      "id": "d6-soft-drinks-iced-tea",
+      "categoryId": "d6-soft-drinks",
+      "name": "Iced tea",
+      "slug": "iced-tea"
+    },
+    {
+      "id": "d6-energy-sports-drinks-energy-drinks",
+      "categoryId": "d6-energy-sports-drinks",
+      "name": "Energy drinks",
+      "slug": "energy-drinks"
+    },
+    {
+      "id": "d6-energy-sports-drinks-sports-drinks",
+      "categoryId": "d6-energy-sports-drinks",
+      "name": "Sports drinks",
+      "slug": "sports-drinks"
+    },
+    {
+      "id": "d6-hot-drinks-coffee",
+      "categoryId": "d6-hot-drinks",
+      "name": "Coffee",
+      "slug": "coffee"
+    },
+    {
+      "id": "d6-hot-drinks-tea",
+      "categoryId": "d6-hot-drinks",
+      "name": "Tea",
+      "slug": "tea"
+    },
+    {
+      "id": "d7-snacks-crisps-popcorn",
+      "categoryId": "d7-snacks",
+      "name": "Crisps & popcorn",
+      "slug": "crisps-popcorn"
+    },
+    {
+      "id": "d7-snacks-crackers-pretzels",
+      "categoryId": "d7-snacks",
+      "name": "Crackers & pretzels",
+      "slug": "crackers-pretzels"
+    },
+    {
+      "id": "d7-snacks-nuts-dried-fruit",
+      "categoryId": "d7-snacks",
+      "name": "Nuts & dried fruit",
+      "slug": "nuts-dried-fruit"
+    },
+    {
+      "id": "d7-snacks-snack-bars",
+      "categoryId": "d7-snacks",
+      "name": "Snack bars",
+      "slug": "snack-bars"
+    },
+    {
+      "id": "d7-confectionery-chocolate",
+      "categoryId": "d7-confectionery",
+      "name": "Chocolate",
+      "slug": "chocolate"
+    },
+    {
+      "id": "d7-confectionery-sweets-gum",
+      "categoryId": "d7-confectionery",
+      "name": "Sweets & gum",
+      "slug": "sweets-gum"
+    },
+    {
+      "id": "d7-confectionery-biscuits-wafers",
+      "categoryId": "d7-confectionery",
+      "name": "Biscuits & wafers",
+      "slug": "biscuits-wafers"
+    },
+    {
+      "id": "d8-cleaning-kitchen-cleaning",
+      "categoryId": "d8-cleaning",
+      "name": "Kitchen cleaning",
+      "slug": "kitchen-cleaning"
+    },
+    {
+      "id": "d8-cleaning-bathroom-cleaning",
+      "categoryId": "d8-cleaning",
+      "name": "Bathroom cleaning",
+      "slug": "bathroom-cleaning"
+    },
+    {
+      "id": "d8-cleaning-surface-cleaning",
+      "categoryId": "d8-cleaning",
+      "name": "Surface cleaning",
+      "slug": "surface-cleaning"
+    },
+    {
+      "id": "d8-cleaning-cleaning-accessories",
+      "categoryId": "d8-cleaning",
+      "name": "Cleaning accessories",
+      "slug": "cleaning-accessories"
+    },
+    {
+      "id": "d8-laundry-detergents",
+      "categoryId": "d8-laundry",
+      "name": "Detergents",
+      "slug": "detergents"
+    },
+    {
+      "id": "d8-laundry-fabric-softeners",
+      "categoryId": "d8-laundry",
+      "name": "Fabric softeners",
+      "slug": "fabric-softeners"
+    },
+    {
+      "id": "d8-personal-care-hair-care",
+      "categoryId": "d8-personal-care",
+      "name": "Hair care",
+      "slug": "hair-care"
+    },
+    {
+      "id": "d8-personal-care-skin-sun-care",
+      "categoryId": "d8-personal-care",
+      "name": "Skin & sun care",
+      "slug": "skin-sun-care"
+    },
+    {
+      "id": "d8-toiletries-hygiene-oral-care",
+      "categoryId": "d8-toiletries-hygiene",
+      "name": "Oral care",
+      "slug": "oral-care"
+    },
+    {
+      "id": "d8-toiletries-hygiene-shaving",
+      "categoryId": "d8-toiletries-hygiene",
+      "name": "Shaving",
+      "slug": "shaving"
+    },
+    {
+      "id": "d8-toiletries-hygiene-personal-hygiene",
+      "categoryId": "d8-toiletries-hygiene",
+      "name": "Personal hygiene",
+      "slug": "personal-hygiene"
+    },
+    {
+      "id": "d8-baby-essentials-baby-care",
+      "categoryId": "d8-baby-essentials",
+      "name": "Baby care",
+      "slug": "baby-care"
+    },
+    {
+      "id": "d8-baby-essentials-nappies-wipes",
+      "categoryId": "d8-baby-essentials",
+      "name": "Nappies & wipes",
+      "slug": "nappies-wipes"
+    },
+    {
+      "id": "d8-baby-essentials-baby-nutrition",
+      "categoryId": "d8-baby-essentials",
+      "name": "Baby nutrition",
+      "slug": "baby-nutrition"
+    },
+    {
+      "id": "d8-pet-supplies-pet-food",
+      "categoryId": "d8-pet-supplies",
+      "name": "Pet food",
+      "slug": "pet-food"
+    },
+    {
+      "id": "d8-pet-supplies-treats",
+      "categoryId": "d8-pet-supplies",
+      "name": "Treats",
+      "slug": "treats"
+    },
+    {
+      "id": "d8-pet-supplies-litter-accessories",
+      "categoryId": "d8-pet-supplies",
+      "name": "Litter & accessories",
+      "slug": "litter-accessories"
+    },
+    {
+      "id": "d8-home-essentials-paper-supplies",
+      "categoryId": "d8-home-essentials",
+      "name": "Paper supplies",
+      "slug": "paper-supplies"
+    },
+    {
+      "id": "d8-home-essentials-disposable-tableware",
+      "categoryId": "d8-home-essentials",
+      "name": "Disposable tableware",
+      "slug": "disposable-tableware"
+    },
+    {
+      "id": "d8-home-essentials-batteries-lighting",
+      "categoryId": "d8-home-essentials",
+      "name": "Batteries & lighting",
+      "slug": "batteries-lighting"
+    },
+    {
+      "id": "d8-home-essentials-stationery",
+      "categoryId": "d8-home-essentials",
+      "name": "Stationery",
+      "slug": "stationery"
+    },
+    {
+      "id": "d8-home-essentials-household-accessories",
+      "categoryId": "d8-home-essentials",
+      "name": "Household accessories",
+      "slug": "household-accessories"
+    },
+    {
+      "id": "d6-water-drinking-water",
+      "categoryId": "d6-water",
+      "name": "Drinking water",
+      "slug": "drinking-water"
+    }
+  ]
+}

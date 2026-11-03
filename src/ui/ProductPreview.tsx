@@ -1,16 +1,17 @@
 import {Suspense,useEffect,useMemo,useRef,useState} from 'react';
 import {Canvas,useThree} from '@react-three/fiber';
-import {OrbitControls,useTexture,Environment,Lightformer} from '@react-three/drei';
+import {OrbitControls,Environment,Lightformer} from '@react-three/drei';
 import {Color,InstancedBufferAttribute,InstancedMesh,Matrix4,SRGBColorSpace,Vector3} from 'three';
+import {packagingAtlas} from '../products/liveArtwork';
 import {productGeometry,productMaterial} from '../products/geometry';
 import type {Product} from '../catalogue/types';
 function Model({product,view}:{product:Product;view:number}){
- const mesh=useRef<InstancedMesh>(null),tex=useTexture(product.inspectionPath);const {camera,invalidate}=useThree();
+ const mesh=useRef<InstancedMesh>(null),art=useMemo(()=>packagingAtlas([product],2,512),[product]),tex=art.texture;const {camera,invalidate}=useThree();
  const geometry=useMemo(()=>{const g=productGeometry(product.modelType).clone();g.setAttribute('atlasRect',new InstancedBufferAttribute(new Float32Array([0,0,.5,1]),4));return g;},[product]);
  const material=useMemo(()=>{tex.colorSpace=SRGBColorSpace;tex.anisotropy=8;return productMaterial(tex,.5);},[tex]);
  useEffect(()=>{mesh.current!.setMatrixAt(0,new Matrix4().makeScale(...product.dimensions));mesh.current!.setColorAt(0,new Color(product.color));mesh.current!.instanceMatrix.needsUpdate=true;mesh.current!.computeBoundingSphere();mesh.current!.instanceColor!.needsUpdate=true;invalidate();return()=>{geometry.dispose();material.dispose();};},[geometry,material,product,invalidate]);
  useEffect(()=>{camera.position.set(view%2===0?.35:-.35,.27,view%2===0?.58:-.58);camera.lookAt(new Vector3(0,product.dimensions[1]/2,0));invalidate();},[view,camera,invalidate,product]);
- useEffect(()=>()=>{tex.dispose();useTexture.clear(product.inspectionPath);},[tex,product.inspectionPath]);
+ useEffect(()=>()=>{tex.dispose();},[tex,product.inspectionPath]);
  return <instancedMesh ref={mesh} args={[geometry,material,1]} dispose={null}/>;
 }
 export default function ProductPreview({product}:{product:Product}){

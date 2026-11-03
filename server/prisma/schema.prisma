@@ -1,0 +1,275 @@
+generator client {
+ provider = "prisma-client-js"
+ engineType = "client"
+ output = "../node_modules/.prisma/client"
+}
+datasource db {
+ provider = "postgresql"
+ url = env("DATABASE_URL")
+}
+enum Role {
+ ADMIN
+ MANAGER
+ STOCK_CLERK
+ CUSTOMER
+}
+model User {
+ id String @id @default(uuid())
+ email String? @unique
+ name String
+ passwordHash String?
+ role Role @default(CUSTOMER)
+ createdAt DateTime @default(now())
+ sessions Session[]
+ cart Cart?
+ movements Movement[]
+ orders Sale[]
+}
+model Session {
+ id String @id @default(uuid())
+ tokenHash String @unique
+ userId String
+ user User @relation(fields:[userId],references:[id],onDelete:Cascade)
+ expiresAt DateTime
+ createdAt DateTime @default(now())
+ @@index([expiresAt])
+}
+model Department {
+ id Int @id
+ name String @unique
+ shortName String
+ color String
+ display String
+ categories Category[]
+ products Product[]
+ locations Location[]
+}
+model Category {
+ id String @id
+ name String
+ departmentId Int
+ department Department @relation(fields:[departmentId],references:[id])
+ subcategories Subcategory[]
+ products Product[]
+ @@unique([departmentId,name])
+}
+model Subcategory {
+ id String @id
+ name String
+ categoryId String
+ category Category @relation(fields:[categoryId],references:[id])
+ products Product[]
+ @@unique([categoryId,name])
+}
+model Product {
+ id String @id @default(uuid())
+ name String
+ brand String
+ description String
+ departmentId Int
+ categoryId String
+ subcategoryId String?
+ department Department @relation(fields:[departmentId],references:[id])
+ category Category @relation(fields:[categoryId],references:[id])
+ subcategory Subcategory? @relation(fields:[subcategoryId],references:[id])
+ active Boolean @default(true)
+ variants Variant[]
+ variations ProductVariation[]
+ createdAt DateTime @default(now())
+ updatedAt DateTime @updatedAt
+}
+model ProductVariation {
+ id String @id
+ productId String
+ product Product @relation(fields:[productId],references:[id])
+ name String
+ attributes Json
+ skus Variant[]
+}
+model ProductModel {
+ id String @id
+ name String
+ modelType String
+ path String?
+ variants Variant[]
+}
+model ProductMedia {
+ id String @id
+ imagePath String
+ inspectionPath String
+ atlasIndex Int
+ variants Variant[]
+}
+model Variant {
+ id String @id @default(uuid())
+ productId String
+ product Product @relation(fields:[productId],references:[id])
+ variationId String
+ variation ProductVariation @relation(fields:[variationId],references:[id])
+ sku String @unique
+ barcode String @unique
+ barcodes Barcode[]
+ name String
+ attributes Json
+ priceCents Int
+ costCents Int
+ discountPercent Int @default(0)
+ unit String
+ currency String @default("RON")
+ dimensions Float[]
+ color String
+ modelId String
+ mediaId String
+ model ProductModel @relation(fields:[modelId],references:[id])
+ media ProductMedia @relation(fields:[mediaId],references:[id])
+ reorderThreshold Int @default(5)
+ rotation String @default("FEFO")
+ shelfLocation Json
+ locationId String
+ location Location @relation(fields:[locationId],references:[id])
+ details Json
+ active Boolean @default(true)
+ batches Batch[]
+ movements Movement[]
+ cartLines CartLine[]
+ supplierProducts SupplierProduct[]
+ purchaseItems PurchaseOrderItem[]
+ createdAt DateTime @default(now())
+ updatedAt DateTime @updatedAt
+}
+model Barcode {
+ id String @id @default(uuid())
+ value String @unique
+ skuId String
+ sku Variant @relation(fields:[skuId],references:[id])
+ type String @default("DEMO")
+}
+model Location {
+ id String @id
+ name String
+ type String
+ departmentId Int?
+ department Department? @relation(fields:[departmentId],references:[id])
+ aisle String?
+ shelf String?
+ variants Variant[]
+ batches Batch[]
+ @@index([departmentId,aisle,shelf])
+}
+model Batch {
+ id String @id @default(uuid())
+ skuId String
+ variant Variant @relation(fields:[skuId],references:[id])
+ batchNumber String
+ locationId String
+ location Location @relation(fields:[locationId],references:[id])
+ quantity Int
+ receivedQuantity Int
+ manufacturedAt DateTime?
+ receivedAt DateTime @default(now())
+ expiryDate DateTime?
+ bestBeforeDate DateTime?
+ @@index([skuId,expiryDate,receivedAt])
+}
+model Movement {
+ id String @id @default(uuid())
+ skuId String
+ variant Variant @relation(fields:[skuId],references:[id])
+ type String
+ quantity Int
+ previousStock Int
+ newStock Int
+ actorId String
+ actor User @relation(fields:[actorId],references:[id])
+ reason String
+ reference String?
+ fromLocationId String?
+ toLocationId String?
+ batchId String?
+ metadata Json?
+ createdAt DateTime @default(now())
+ @@index([skuId,createdAt])
+}
+model Cart {
+ id String @id @default(uuid())
+ userId String @unique
+ user User @relation(fields:[userId],references:[id],onDelete:Cascade)
+ expiresAt DateTime
+ lines CartLine[]
+ updatedAt DateTime @updatedAt
+}
+model CartLine {
+ id String @id @default(uuid())
+ cartId String
+ cart Cart @relation(fields:[cartId],references:[id],onDelete:Cascade)
+ skuId String
+ variant Variant @relation(fields:[skuId],references:[id])
+ quantity Int
+ @@unique([cartId,skuId])
+}
+model Sale {
+ id String @id @default(uuid())
+ userId String
+ user User @relation(fields:[userId],references:[id])
+ idempotencyKey String
+ receipt Json
+ allocations Json
+ createdAt DateTime @default(now())
+ @@unique([userId,idempotencyKey])
+}
+model Supplier {
+ id String @id @default(uuid())
+ name String
+ contactName String
+ email String
+ phone String
+ address String
+ active Boolean @default(true)
+ products SupplierProduct[]
+ orders PurchaseOrder[]
+}
+model SupplierProduct {
+ id String @id @default(uuid())
+ supplierId String
+ supplier Supplier @relation(fields:[supplierId],references:[id])
+ skuId String
+ variant Variant @relation(fields:[skuId],references:[id])
+ supplierSku String
+ costCents Int
+ leadTimeDays Int @default(3)
+ @@unique([supplierId,skuId])
+}
+model PurchaseOrder {
+ id String @id @default(uuid())
+ supplierId String
+ supplier Supplier @relation(fields:[supplierId],references:[id])
+ status String @default("OPEN")
+ reference String
+ expectedAt DateTime?
+ createdById String
+ items PurchaseOrderItem[]
+ deliveries Delivery[]
+ createdAt DateTime @default(now())
+}
+model PurchaseOrderItem {
+ id String @id @default(uuid())
+ purchaseOrderId String
+ purchaseOrder PurchaseOrder @relation(fields:[purchaseOrderId],references:[id],onDelete:Cascade)
+ skuId String
+ variant Variant @relation(fields:[skuId],references:[id])
+ quantity Int
+ receivedQuantity Int @default(0)
+ costCents Int
+ @@unique([purchaseOrderId,skuId])
+}
+model Delivery {
+ id String @id @default(uuid())
+ purchaseOrderId String
+ purchaseOrder PurchaseOrder @relation(fields:[purchaseOrderId],references:[id])
+ idempotencyKey String @unique
+ reference String
+ receivedById String
+ lines Json
+ discrepancies Json
+ createdAt DateTime @default(now())
+}

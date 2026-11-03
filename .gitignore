@@ -5,3 +5,9 @@ dist/
 playwright-report/
 test-results/
 *.tsbuildinfo
+.local/
+.env
+server/.env
+server/dist/
+server/coverage/
+.local-admin.json

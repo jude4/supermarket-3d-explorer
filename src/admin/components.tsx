@@ -1,0 +1,21 @@
+import {cloneElement,isValidElement,useEffect,useId,useRef,useState} from 'react';
+import type {FormEvent,ReactNode} from 'react';
+import {errorMessage,text} from './api';
+import type {Row} from './api';
+export function Button({children,onClick,type='button',disabled=false,kind='',...rest}:{children:ReactNode;onClick?:()=>void;type?:'button'|'submit';disabled?:boolean;kind?:string;['aria-label']?:string}){return <button className={`admin-btn ${kind}`} type={type} onClick={onClick} disabled={disabled} {...rest}>{children}</button>;}
+export function Pill({children,kind='neutral'}:{children:ReactNode;kind?:'success'|'warning'|'danger'|'neutral'}){return <span className={`admin-pill ${kind}`}>{children}</span>;}
+export function Field({label,children,wide=false}:{label:string;children:ReactNode;wide?:boolean}){const generated=useId();const control=isValidElement<{id?:string}>(children)&&typeof children.type==='string'&&['input','select','textarea'].includes(children.type);if(control){const id=children.props.id||generated;return <div className={`admin-field ${wide?'wide':''}`}><label htmlFor={id}>{label}</label>{cloneElement(children,{id})}</div>;}return <label className={`admin-field ${wide?'wide':''}`}><span>{label}</span>{children}</label>;}
+export function Options({rows,empty='Select…',valueKey='id',labelKey='name'}:{rows:Row[];empty?:string;valueKey?:string;labelKey?:string}){return <><option value="">{empty}</option>{rows.map(item=><option key={item.id} value={text(item,valueKey,item.id)}>{text(item,labelKey,item.id)}</option>)}</>;}
+export function Table({headers,children,empty,colSpan}:{headers:string[];children:ReactNode;empty?:boolean;colSpan?:number}){return <div className="admin-table-wrap"><table className="admin-table"><thead><tr>{headers.map(h=><th key={h}>{h}</th>)}</tr></thead><tbody>{empty?<tr><td colSpan={colSpan??headers.length}><div className="admin-empty">No records match this view.</div></td></tr>:children}</tbody></table></div>;}
+export function Modal({title,children,onClose}:{title:string;children:ReactNode;onClose:()=>void}){
+ const ref=useRef<HTMLDivElement>(null),close=useRef(onClose);close.current=onClose;useEffect(()=>{const previous=document.activeElement as HTMLElement|null;ref.current?.focus();const key=(e:KeyboardEvent)=>{if(e.key==='Escape')close.current();if(e.key==='Tab'){const nodes=ref.current?.querySelectorAll<HTMLElement>('button:not(:disabled),input:not(:disabled),select:not(:disabled),textarea:not(:disabled),[href]');if(!nodes?.length)return;const first=nodes[0],last=nodes[nodes.length-1];if(e.shiftKey&&(document.activeElement===first||document.activeElement===ref.current)){e.preventDefault();last.focus();}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}}};document.addEventListener('keydown',key);return()=>{document.removeEventListener('keydown',key);previous?.focus();};},[]);
+ return <div className="admin-modal-backdrop"><div role="dialog" aria-modal="true" aria-label={title} tabIndex={-1} ref={ref} className="admin-modal"><div className="admin-modal-heading"><h2>{title}</h2><Button onClick={onClose} aria-label="Close dialog">×</Button></div>{children}</div></div>;
+}
+export function MutationForm({children,onSubmit,submit='Save changes',onCancel}:{children:ReactNode;onSubmit:(data:FormData)=>Promise<void>;submit?:string;onCancel?:()=>void}){
+ const [busy,setBusy]=useState(false),[error,setError]=useState('');
+ async function save(event:FormEvent<HTMLFormElement>){event.preventDefault();if(busy)return;const data=new FormData(event.currentTarget);setBusy(true);setError('');try{await onSubmit(data);}catch(e){setError(errorMessage(e));}finally{setBusy(false);}}
+ return <form onSubmit={save}>{error&&<div role="alert" className="admin-message error">{error}</div>}<fieldset disabled={busy} style={{border:0,margin:0,padding:0}}>{children}<div className="admin-form-actions">{onCancel&&<Button onClick={onCancel}>Cancel</Button>}<Button type="submit" kind="primary" disabled={busy}>{busy?'Saving…':submit}</Button></div></fieldset></form>;
+}
+export const stringValue=(data:FormData,key:string)=>String(data.get(key)||'').trim();
+export const numericValue=(data:FormData,key:string)=>Number(data.get(key)||0);
+export const optionalValue=(data:FormData,key:string)=>stringValue(data,key)||undefined;

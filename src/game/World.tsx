@@ -9,6 +9,11 @@ import { Player } from './Player';
 import { ArchitecturalInstances } from './ArchitecturalInstances';
 import { Environment, Lightformer } from '@react-three/drei';
 import {ProductRenderer} from '../products/ProductRenderer';
+import {useCatalogueRevision} from '../catalogue/catalogue';
+import {sections} from '../data/layout';
+import {departmentById} from '../catalogue/departments';
+import {rebuildPlacements} from '../products/placement';
+import {useMemo} from 'react';
 import {PriceTags} from '../products/PriceTags';
 import {DepartmentFixtures} from '../retail/DepartmentFixtures';
 import {Facilities} from '../retail/Facilities';
@@ -20,6 +25,7 @@ function CameraSettings() {
   useEffect(()=>{(camera as PerspectiveCamera).fov=fov;(camera as PerspectiveCamera).updateProjectionMatrix();},[fov,camera]); return null;
 }
 function Scene() {
+ const revision=useCatalogueRevision();useMemo(()=>{sections.forEach(s=>s.label=departmentById(s.id).shortName);rebuildPlacements();},[revision]);
   const mode=useExplorer(s=>s.mode); const quality=useExplorer(s=>s.settings.quality);
   return <>
     <color attach="background" args={['#dce1d6']}/><fog attach="fog" args={['#dce1d6',38,105]}/>
@@ -30,7 +36,7 @@ function Scene() {
     {[-7,-19,-33,-46].map(z=><pointLight key={z} position={[0,4.4,z]} intensity={65} decay={2} distance={22} color="#fff5df"/>)}
     <Suspense fallback={null}>
       <Physics gravity={[0,-9.81,0]} timeStep={1/60} paused={mode!=='playing'}>
-        <ArchitecturalInstances><Architecture/><Doors/><DepartmentFixtures/><Facilities/><Trolley/></ArchitecturalInstances><Fixtures/><ProductRenderer/><PriceTags/><Player/>
+        <ArchitecturalInstances><Architecture/><Doors/><DepartmentFixtures key={`departments-${revision}`}/><Facilities/><Trolley/></ArchitecturalInstances><Fixtures/><ProductRenderer key={`stock-${revision}`}/><PriceTags key={`prices-${revision}`}/><Player/>
       </Physics>
       <Ready/>
     </Suspense><CameraSettings/>

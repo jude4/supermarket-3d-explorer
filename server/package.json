@@ -1,0 +1,40 @@
+{
+  "name": "supermarket-explorer-api",
+  "version": "1.0.0",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx watch src/main.ts",
+    "start": "node dist/main.js",
+    "prisma:generate": "node scripts/generate-client.cjs",
+    "db:migrate": "node scripts/migrate.cjs",
+    "db:seed": "tsx prisma/seed.ts",
+    "staff:create": "tsx src/staff-cli.ts",
+    "test": "tsx --test test/*.test.ts"
+  },
+  "dependencies": {
+    "@nestjs/common": "^11.1.0",
+    "@nestjs/core": "^11.1.0",
+    "@nestjs/platform-express": "^11.1.0",
+    "@prisma/adapter-pg": "6.19.0",
+    "@prisma/client": "6.19.0",
+    "dotenv": "^18.0.9",
+    "express": "^5.1.0",
+    "pg": "^8.23.1",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.2",
+    "tsx": "^4.20.0"
+  },
+  "devDependencies": {
+    "@prisma/internals": "6.19.0",
+    "@types/express": "^5.0.0",
+    "@types/node": "^24.0.0",
+    "@types/pg": "^8.23.1",
+    "typescript": "~5.9.3"
+  },
+  "overrides": {
+    "multer": "^2.5.0",
+    "effect": "^3.20.0"
+  }
+}

@@ -21,7 +21,7 @@ export function productGeometry(type:ModelType):BufferGeometry {
  const pieces:BufferGeometry[]=[];
  const add=(g:BufferGeometry,color='#ffffff',pos:[number,number,number]=[0,0,0],scale:[number,number,number]=[1,1,1],rot:[number,number,number]=[0,0,0],label=0)=>pieces.push(part(g,color,pos,scale,rot,label));
  const sphere=(pos:[number,number,number],scale:[number,number,number],color='#ffffff')=>add(new SphereGeometry(.5,12,8),color,pos,scale);
- const label=(cyl=false)=>{for(const back of [false,true]){const g=cyl?new CylinderGeometry(.507,.507,.46,16,1,true,-Math.PI/3,Math.PI*2/3):new PlaneGeometry(.88,.48);add(g,'#ffffff',cyl?[0,.51,0]:[0,.53,back?-.507:.507],[1,1,1],[0,back?Math.PI:0,0],back?2:1);}};
+ const label=(cyl=false)=>{for(const back of [false,true]){const g=cyl?new CylinderGeometry(.507,.507,.46,16,1,true,-Math.PI/3,Math.PI*2/3):new PlaneGeometry(.88,.48);add(g,'#ffffff',cyl?[0,.51,0]:[0,.53,back?-(type==='carton'?.54:.507):(type==='carton'?.54:.507)],[1,1,1],[0,back?Math.PI:0,0],back?2:1);}};
  if(type==='cookware'){
   add(new LatheGeometry([[0,0],[.32,0],[.40,.08],[.43,.48],[.38,.52],[.33,.1],[0,.1]].map(p=>new Vector2(p[0],p[1])),20),'#a9aea5',[0,.1,0]);
   add(new CylinderGeometry(.44,.44,.05,20),'#d8dcd2',[0,.65,0]);add(round(),'#4d5b50',[0,.74,0],[.18,.12,.12]);
@@ -34,9 +34,9 @@ export function productGeometry(type:ModelType):BufferGeometry {
   add(round(),'#d4ddd0',[0,.4,0],[1,.8,1]);add(round(),'#7b9672',[0,.86,0],[1.07,.14,1.07]);for(const x of [-.52,.52])add(round(),'#607d59',[x,.75,0],[.08,.21,.4]);label();
  }else if(['box','carton','bag','rolls','eggs','tray','fish-tray','poultry-tray','shellfish-tray','mussel-tray','crab-tray','salad-tray'].includes(type)){
   if(type==='carton'){
-   const s=new Shape();s.moveTo(-.5,0);s.lineTo(.5,0);s.lineTo(.5,.77);s.lineTo(.12,1);s.lineTo(-.12,1);s.lineTo(-.5,.77);s.closePath();const g=new ExtrudeGeometry(s,{depth:1,bevelEnabled:true,bevelSize:.025,bevelThickness:.025,bevelSegments:1,steps:1});g.translate(0,0,-.5);add(g);add(new CylinderGeometry(.1,.1,.04,10),'#e9e6d8',[.16,.87,.15]);label();
+   const s=new Shape();s.moveTo(-.5,0);s.lineTo(.5,0);s.lineTo(.5,.77);s.lineTo(.12,1);s.lineTo(-.12,1);s.lineTo(-.5,.77);s.closePath();const g=new ExtrudeGeometry(s,{depth:1,bevelEnabled:true,bevelSize:.025,bevelThickness:.025,bevelSegments:1,steps:1});g.translate(0,0,-.5);add(g);add(new CylinderGeometry(.1,.1,.06,20),'#e9e6d8',[.16,.87,.15]);add(new BoxGeometry(.94,.035,.055),'#e8e5da',[0,1.015,0]);for(const x of [-.46,.46])add(new BoxGeometry(.012,.72,.012),'#dedbd0',[x,.38,.51]);label();
   }else if(type==='bag'){
-   const g=round();const a=g.getAttribute('position');for(let i=0;i<a.count;i++){const y=a.getY(i);a.setX(i,a.getX(i)*(1-.23*Math.abs(y)*2));a.setZ(i,a.getZ(i)*(.85+.15*Math.cos(y*6)));}g.computeVertexNormals();add(g,'#ffffff',[0,.5,0]);add(new BoxGeometry(.72,.025,1.02),'#b4b3a5',[0,.98,0]);label();
+   const g=new RoundedBoxGeometry(1,1,1,5,.09);const a=g.getAttribute('position');for(let i=0;i<a.count;i++){const x=a.getX(i),y=a.getY(i),z=a.getZ(i);const pinch=1-.40*Math.pow(Math.abs(y)*2,3);a.setX(i,x*pinch);a.setZ(i,z*(.88+.12*Math.cos(y*6))+.012*Math.sin(x*37+y*19)*Math.abs(y));}g.computeVertexNormals();add(g,'#ffffff',[0,.5,0]);for(const y of [.015,.985]){add(new BoxGeometry(.65,.03,.75),'#e8e5d6',[0,y,0]);for(let i=0;i<15;i++)add(new BoxGeometry(.012,.038,.76),'#d5d2c4',[(i-7)*.043,y,0]);}label();
   }else if(type==='tray'||type.endsWith('-tray')){
    add(round(),'#eee9db',[0,.12,0],[1,.24,1]);
    if(type==='fish-tray'){for(const x of [-.23,.23]){sphere([x,.43,0],[.42,.24,.85],'#ffffff');for(const z of [-.25,-.1,.05,.2])add(new BoxGeometry(.35,.02,.015),'#e7dac3',[x,.56,z],[1,1,1],[0,.2,0]);}}
@@ -53,11 +53,26 @@ export function productGeometry(type:ModelType):BufferGeometry {
   }else if(type==='rolls'){
    for(const x of [-.24,.24])for(const z of [-.24,.24]){add(new CylinderGeometry(.23,.23,.9,12),'#ffffff',[x,.45,z]);add(new CylinderGeometry(.07,.07,.015,10),'#b1a58c',[x,.91,z]);}label();
   }else{add(round(),'#ffffff',[0,.5,0]);label();}
- }else if(['bottle','glass-bottle','jar','can','tub','spray','tube'].includes(type)){
+ }else if(type==='can'){
+  const profile=[[0,0],[.41,0],[.46,.025],[.46,.07],[.49,.13],[.49,.83],[.44,.91],[.44,.97],[0,.97]];
+  add(new LatheGeometry(profile.map(p=>new Vector2(p[0],p[1])),32));
+  for(const y of [.025,.97])add(new TorusGeometry(.445,.022,6,32),'#d8dedf',[0,y,0],[1,1,1],[Math.PI/2,0,0]);
+  add(new CylinderGeometry(.43,.43,.015,32),'#bfc7c9',[0,.965,0]);
+  add(new TorusGeometry(.31,.006,4,24),'#858e90',[0,.976,0],[1,1,1],[Math.PI/2,0,0]);
+  add(new TorusGeometry(.08,.018,6,16),'#e6e9e8',[0,.987,.065],[.65,1,1.4],[Math.PI/2,0,0]);
+  add(new SphereGeometry(.065,12,6),'#495354',[0,.976,-.15],[1,.04,1.5]);label(true);
+ }else if(['bottle','glass-bottle','jar','tub','spray','tube'].includes(type)){
   const profile=type==='bottle'||type==='glass-bottle'||type==='spray'?[[0,0],[.4,0],[.47,.05],[.47,.65],[.28,.8],[.18,.84],[.18,.96],[0,.96]]:type==='tub'?[[0,0],[.4,0],[.5,.88],[.52,.94],[0,.94]]:type==='tube'?[[0,0],[.34,0],[.46,.12],[.42,.9],[.36,1],[0,1]]:[[0,0],[.47,0],[.5,.05],[.5,.88],[.44,.94],[0,.94]];
   add(new LatheGeometry(profile.map(p=>new Vector2(p[0],p[1])),16));
   add(new CylinderGeometry(type==='bottle'||type==='glass-bottle'?.2:.51,type==='bottle'||type==='glass-bottle'?.2:.51,.07,16),'#d1d4cb',[0,.955,0]);
   if(type==='spray'){add(round(),'#e3e4da',[.1,.98,0],[.6,.12,.23]);add(round(),'#657365',[.26,.86,0],[.08,.24,.12],[0,0,-.2]);}
+  if(type==='bottle'||type==='glass-bottle'){
+   for(const y of [.09,.15,.66])add(new TorusGeometry(.466,.009,4,24),'#e0e9eb',[0,y,0],[1,1,1],[Math.PI/2,0,0]);
+   for(let i=0;i<24;i++){const a=i*Math.PI/12;add(new CylinderGeometry(.006,.006,.055,4),'#b7c5cb',[Math.sin(a)*.201,.956,Math.cos(a)*.201]);}
+   add(new TorusGeometry(.185,.009,4,24),'#9cacb4',[0,.91,0],[1,1,1],[Math.PI/2,0,0]);
+  }else if(type==='jar'){
+   for(let i=0;i<32;i++){const a=i*Math.PI/16;add(new CylinderGeometry(.007,.007,.06,4),'#e4e4dc',[Math.sin(a)*.505,.955,Math.cos(a)*.505]);}
+  }
   label(true);
  }else if(type==='banana'){
   for(const z of [-.2,.12])for(const x of [-.1,.1])add(curve([[-.4,.16,z],[-.23,.62,z],[.15,.83,z],[.43,.63,z]],.1),'#ffffff',[x,0,0]);add(new CylinderGeometry(.05,.06,.18,6),'#665b32',[-.4,.12,0]);
@@ -96,7 +111,7 @@ export function productGeometry(type:ModelType):BufferGeometry {
  const bounds=geometry.boundingBox!,size=new Vector3();bounds.getSize(size);geometry.translate(-(bounds.min.x+bounds.max.x)/2,-bounds.min.y,-(bounds.min.z+bounds.max.z)/2);geometry.scale(1/size.x,1/size.y,1/size.z);geometry.computeBoundingBox();geometry.computeBoundingSphere();cache.set(type,geometry);return geometry;
 }
 export function productMaterial(texture:Texture,backShift=1/32){
- const material=new MeshStandardMaterial({map:texture,vertexColors:true,roughness:.47,metalness:.08,side:DoubleSide});
+ const material=new MeshStandardMaterial({map:texture,vertexColors:true,roughness:.36,metalness:.08,side:DoubleSide});
  material.onBeforeCompile=shader=>{
   shader.uniforms.retailBackShift={value:backShift};
   shader.vertexShader='attribute float labelMask; attribute vec4 atlasRect; varying vec2 vRetailUv; varying float vRetailLabel; uniform float retailBackShift;\n'+shader.vertexShader;
@@ -105,5 +120,5 @@ export function productMaterial(texture:Texture,backShift=1/32){
   shader.fragmentShader=shader.fragmentShader.replace('#include <map_fragment>','vec4 packageTex=texture2D(map,vRetailUv);diffuseColor*=mix(vec4(1.),packageTex,step(.5,vRetailLabel));');
   shader.fragmentShader=shader.fragmentShader.replace('#include <color_fragment>','#ifdef USE_COLOR\ndiffuseColor.rgb*=mix(vColor.rgb,vec3(1.),step(.5,vRetailLabel));\n#endif');
  };
- material.customProgramCacheKey=()=>`retail-atlas-${backShift}`;return material;
+ material.customProgramCacheKey=()=>`retail-atlas-v2-${backShift}`;return material;
 }

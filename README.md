@@ -166,6 +166,10 @@ The inventory browser test requires the isolated 5175 frontend. It exercises rea
 
 Browser suites use system Chromium (`/usr/bin/chromium`, override with `CHROMIUM_PATH`). Run browser suites sequentially when using software rendering. Development walkthrough tests use dev-only inspection hooks to position the real capsule for collision cases; production builds exclude those hooks. Software rendering validates behavior and shader compilation, not real-device frame rates. `test:retail` is a compatibility alias for the current inventory browser suite.
 
+## Focused water-bottle viewer
+
+The **Still water · 500 ml** variation has a dedicated large 360-degree 3D inspector with mouse/touch controls, zoom, front/back/top/bottom views, reset, auto-rotate, studio backgrounds and fullscreen. Choose that variation from a water product's selector. Its original reference-based bottle model and fictional Bright Break wrap are separate from other sizes. Real photographic rotation frames have not been supplied, so photo mode remains hidden. See [WATER_VIEWER.md](WATER_VIEWER.md) for assets, capture requirements and validation. Run `npm run assets:water` for Blender authoring or `npm run test:water-viewer` against the isolated test store.
+
 ## Visual asset pilot
 
 Five Blender-authored GLBs now cover water bottles, drink cans, milk cartons, cereal boxes and cleaning sprays. Matching nearby shelf facings and inspection use the imported models, with original fictional artwork and separate PBR regions. Other catalogue families retain their existing representations. See [VISUAL_QUALITY.md](VISUAL_QUALITY.md) for the audit, LOD limits, provenance, acceptance process and remaining quality gaps. This is not a claim that the full store is photorealistic.

@@ -26,7 +26,9 @@
     "test:inventory": "node scripts/inventory-browser-test.mjs",
     "test:admin": "node scripts/admin-browser-test.mjs",
     "assets:premium": "blender --background --python scripts/model-premium-products.py",
-    "test:visual": "node scripts/premium-browser-test.mjs"
+    "test:visual": "node scripts/premium-browser-test.mjs",
+    "assets:water": "blender --background --python scripts/model-water-bottle.py",
+    "test:water-viewer": "node scripts/water-viewer-browser-test.mjs"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.7",

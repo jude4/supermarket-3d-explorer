@@ -3,10 +3,13 @@ import type {ReactNode} from 'react';
 import {Html,useGLTF,useTexture} from '@react-three/drei';
 import {Box3,Color,Mesh,MeshStandardMaterial,Vector3,RepeatWrapping,Vector2,Texture} from 'three';
 import type {Product} from '../catalogue/types';
+import {productViewerAssets} from '../catalogue/viewerAssets';
+import {waterLabel} from '../components/product-viewer/waterLabel';
 import {packagingAtlas} from './liveArtwork';
 /** Explicit five-asset pilot: unmatched catalogue entries keep their existing representation. */
 export function premiumAsset(p:Product){
  if(p.modelPath?.startsWith('/models/')&&p.modelPath.endsWith('.glb'))return p.modelPath;
+ if(productViewerAssets[p.id])return productViewerAssets[p.id].model;
  const name=p.name.toLowerCase();
  if(p.modelType==='bottle'&&/water/.test(name))return 'water-bottle';
  if(p.modelType==='can'&&/cola|lemonade|soda|orange fizz/.test(name))return 'drink-can';
@@ -18,7 +21,7 @@ export function premiumAsset(p:Product){
 /** Fit the authored silhouette within the catalogue's allocated shelf envelope without stretching. */
 export function premiumDisplaySize(p:Product,size=p.dimensions):[number,number,number]{
  const key=premiumAsset(p);const ratios:Record<string,[number,number,number]>={'water-bottle':[.28,1,.28],'drink-can':[.57,1,.57],'milk-carton':[.34,1,.34],'cereal-box':[.65,1,.2],'cleaning-spray':[.38,1,.23]};
- const ratio=key?ratios[key]:undefined;if(!ratio)return size;
+ const ratio=productViewerAssets[p.id]?.dimensions||(key?ratios[key]:undefined);if(!ratio)return size;
  const scale=Math.min(...size.map((value,i)=>value/ratio[i]));return ratio.map(v=>v*scale) as [number,number,number];
 }
 function ImportedProduct({product,resolution=512}:{product:Product;resolution?:number}){
@@ -34,7 +37,9 @@ function ImportedProduct({product,resolution=512}:{product:Product;resolution?:n
    for(const map of [normal,rough]){map.wrapS=map.wrapT=RepeatWrapping;map.repeat.set(3,3);map.needsUpdate=true;textures.push(map);}
    material.normalMap=normal;material.normalScale=new Vector2(.12,.12);material.roughnessMap=rough;
 
-   if(object.name.startsWith('Label')){const texture=art.texture.clone();texture.flipY=false;texture.repeat.set(.5,1);texture.offset.x=object.name.startsWith('LabelBack')?.5:0;texture.needsUpdate=true;textures.push(texture);material.map=texture;material.color.set('white');material.roughness=.57;material.metalness=0;}
+   if(productViewerAssets[product.id]){material.normalMap=null;material.roughnessMap=null;}
+   if(object.name==='WaterWrapLabel'){const texture=waterLabel(product);textures.push(texture);material.map=texture;material.color.set('white');material.roughness=.28;material.metalness=0;}
+   else if(object.name.startsWith('Label')){const texture=art.texture.clone();texture.flipY=false;texture.repeat.set(.5,1);texture.offset.x=object.name.startsWith('LabelBack')?.5:0;texture.needsUpdate=true;textures.push(texture);material.map=texture;material.color.set('white');material.roughness=.57;material.metalness=0;}
    else if(material.name.startsWith('Printed lacquer')){material.color.set(product.color);material.metalness=.12;material.roughness=.38;}
    else if(material.name.startsWith('Satin polymer')){material.color.lerp(new Color(product.color),.45);material.roughness=.24;}
   });

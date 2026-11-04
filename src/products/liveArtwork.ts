@@ -1,13 +1,16 @@
 import {CanvasTexture,SRGBColorSpace} from 'three';
 import type {Product} from '../catalogue/types';
+import {productViewerAssets} from '../catalogue/viewerAssets';
+import {waterLabel} from '../components/product-viewer/waterLabel';
 import {money,unitPrice} from '../shopping/pricing';
 function wrapped(c:CanvasRenderingContext2D,text:string,x:number,y:number,width:number,lineHeight:number,maxLines=3){let line='',row=0;for(const word of text.split(/\s+/)){const next=(line+' '+word).trim();if(c.measureText(next).width>width&&line){c.fillText(line,x,y+row*lineHeight);line=word;row++;if(row>=maxLines)return;}else line=next;}c.fillText(line,x,y+row*lineHeight);}
 export function packagingAtlas(items:Product[],columns=32,tileSize=128){
  const rows=Math.max(1,Math.ceil(items.length*2/columns));const tile=Math.min(tileSize,Math.floor(4096/Math.max(columns,rows)));
  const canvas=document.createElement('canvas');canvas.width=columns*tile;canvas.height=rows*tile;const c=canvas.getContext('2d')!;
- items.forEach((p,index)=>{for(const back of [false,true]){
+ items.forEach((p,index)=>{const wrap=productViewerAssets[p.id]?waterLabel(p):null;for(const back of [false,true]){
   const i=index*2+(back?1:0),x=i%columns*tile,y=Math.floor(i/columns)*tile;
   c.save();c.translate(x,y);c.scale(tile/256,tile/256);
+  if(wrap){c.drawImage(wrap.image,back?1024:0,0,1024,768,0,0,256,256);c.restore();continue;}
   const colour=p.color||'#396851';const gradient=c.createLinearGradient(0,0,256,256);gradient.addColorStop(0,colour);gradient.addColorStop(1,'#142e35');c.fillStyle=gradient;c.fillRect(0,0,256,256);
   c.globalAlpha=.12;c.strokeStyle='white';c.lineWidth=2;for(let j=0;j<8;j++){c.beginPath();c.ellipse(190,220,80+j*14,50+j*12,-.5,0,Math.PI*2);c.stroke();}c.globalAlpha=1;
   c.fillStyle='#fffdf4';c.font='bold 17px Arial';wrapped(c,p.brand.toUpperCase(),17,27,220,19,2);
@@ -24,7 +27,7 @@ export function packagingAtlas(items:Product[],columns=32,tileSize=128){
    c.fillStyle='#fffdf4';c.fillRect(0,235,256,21);c.fillStyle='#34483b';c.font='9px Arial';c.fillText('FICTIONAL DEMO · SUPERMARKET EXPLORER',13,249);
   }
   c.restore();
- }});
+ }wrap?.dispose();});
  const texture=new CanvasTexture(canvas);texture.colorSpace=SRGBColorSpace;texture.anisotropy=4;return {texture,rows,columns};
 }
 export function pricingAtlas(items:Product[]){

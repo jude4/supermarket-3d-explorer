@@ -2,6 +2,8 @@ import {Suspense,useEffect,useMemo,useRef,useState} from 'react';
 import {Canvas,useThree} from '@react-three/fiber';
 import {OrbitControls,Environment,Lightformer} from '@react-three/drei';
 import {Color,InstancedBufferAttribute,InstancedMesh,Matrix4,SRGBColorSpace,Vector3} from 'three';
+import {WaterBottleViewer} from '../components/product-viewer/WaterBottleViewer';
+import {productViewerAssets} from '../catalogue/viewerAssets';
 import {PremiumProduct,premiumAsset} from '../products/PremiumProduct';
 import {packagingAtlas} from '../products/liveArtwork';
 import {productGeometry,productMaterial} from '../products/geometry';
@@ -22,5 +24,6 @@ function PremiumInspection({product,view}:{product:Product;view:number}){
 }
 export default function ProductPreview({product}:{product:Product}){
  const [view,setView]=useState(0);
+ if(productViewerAssets[product.id])return <WaterBottleViewer key={product.id} product={product}/>;
  return <div className="product-preview"><Canvas onCreated={({scene,gl,camera})=>{if(import.meta.env.DEV)Object.assign(window,{__retailPreview:{scene,gl,camera}});}} frameloop="demand" dpr={[1,1.5]} camera={{position:[.35,.27,.58],fov:38,near:.01,far:5}} gl={{antialias:true}}><color attach="background" args={['#e8ecdf']}/><hemisphereLight intensity={.65}/><directionalLight position={[2,3,4]} intensity={1.6}/><Suspense fallback={null}><Environment resolution={128} frames={1}><Lightformer intensity={3} scale={[2,4,1]} position={[1,2,3]}/><Lightformer intensity={2} scale={[1,3,1]} position={[-2,1,-1]} rotation={[0,Math.PI,0]}/></Environment>{premiumAsset(product)?<PremiumInspection product={product} view={view}/>:<Model product={product} view={view}/>}</Suspense><OrbitControls makeDefault target={[0,product.dimensions[1]/2,0]} enablePan={false} minDistance={Math.max(.06,Math.max(...product.dimensions)*.65)} maxDistance={Math.max(...product.dimensions)*6}/></Canvas><div className="preview-controls"><button onClick={()=>setView(v=>v+1)} aria-label="View other side">Front / back ↻</button><span>DRAG TO ROTATE · SCROLL TO ZOOM</span></div></div>;
 }

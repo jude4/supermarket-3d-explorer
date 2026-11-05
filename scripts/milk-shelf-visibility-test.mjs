@@ -1,0 +1,10 @@
+import {chromium} from '@playwright/test';
+import assert from 'node:assert/strict';
+const browser=await chromium.launch({executablePath:'/usr/bin/chromium',args:['--no-sandbox','--use-angle=swiftshader','--enable-unsafe-swiftshader','--disable-dev-shm-usage']});
+try{
+ const page=await browser.newPage({viewport:{width:800,height:600}}),errors=[];page.on('pageerror',e=>errors.push(e.message));await page.addInitScript(()=>localStorage.setItem('explorer.settings',JSON.stringify({quality:'low'})));await page.goto('http://127.0.0.1:5175');await page.getByRole('button',{name:'ENTER SUPERMARKET',exact:true}).click({timeout:90000});await page.waitForFunction(()=>window.__explorerPlayer?.body);
+ const position=await page.evaluate(async()=>{const {products}=await import('/src/catalogue/catalogue.ts');const {productPlacements,productDestination}=await import('/src/products/placement.ts');const {navigateTo}=await import('/src/navigation/navigation.ts');const p=products.find(p=>p.id==='d4-001'),a=productPlacements(p)[0],destination=productDestination(p.id),d=window.__explorerPlayer;d.body.setTranslation({x:destination.x,y:.9,z:destination.z},true);d.body.setLinvel({x:0,y:0,z:0},true);d.camera.position.set(destination.x,1.65,destination.z);d.camera.lookAt(a.position[0],a.position[1]+.15,a.position[2]+.2);navigateTo(p.id);return {placement:a.position,destination};});
+ await page.waitForFunction(()=>{let count=0;window.__explorerScene?.traverse(o=>{if(o.name==='Milk_carton_printed_body')count++;});return count===4;},{},{timeout:60000});
+ // Pause rendering once the real shelf has loaded, to capture reliably on the software GPU.
+ await page.evaluate(()=>window.__explorerStore.setState({mode:'paused'}));await page.addStyleTag({content:'.modal-backdrop{display:none!important}'});await page.waitForTimeout(500);await page.locator('canvas').first().screenshot({path:'docs/visuals/milk-1l/shelf-location.png',timeout:60000});assert.deepEqual(errors,[]);console.log('PASS four detailed milk facings present on actual lowest shelf at LOW graphics:',JSON.stringify(position));
+}finally{await browser.close();}

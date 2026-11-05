@@ -35,4 +35,4 @@ export function rebuildPlacements(){
 }
 rebuildPlacements();
 export function productPlacements(p:Product){return allPlacements.filter(i=>i.product.id===p.id);}
-export function productDestination(id:string){const p=allPlacements.find(p=>p.product.id===id);if(!p)return undefined;const side=p.rotation<0?-1:1;return {x:p.position[0]+side*1.15,z:p.position[2],department:p.product.department};}
+export function productDestination(id:string){const p=allPlacements.find(p=>p.product.id===id);if(!p)return undefined;const side=p.rotation<0?-1:1;const aisleDistance=p.shelfLevel===0?2.1:1.15;return {x:p.position[0]+side*aisleDistance,z:p.position[2],department:p.product.department};}

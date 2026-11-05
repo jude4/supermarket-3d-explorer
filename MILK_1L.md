@@ -19,7 +19,7 @@ Authored in metres; GLB Y-up, ground origin, estimated envelope 73 × 242 × 73 
 
 Coated paperboard uses base colour, fine paper normal/roughness and clear coat. Gable and heat-sealed paper have separate finishes; the closure uses non-metallic HDPE. The model is solid packaging geometry for inspection, not a fillable liquid simulation.
 
-As with the water/can upgrade, medium/high graphics substitute the detailed GLB for the first nearby shelf facing within six metres. Low graphics and other facings use a lightweight blue/green pack representation. The inspector loads the full model on all quality levels, with rotation, zoom, front/back/top/bottom, auto rotation, reset and fullscreen.
+The four primary milk cartons use the detailed GLB within six metres on every graphics setting, including Low. Other/far facings retain a lightweight blue/green pack representation. The inspector loads the full model on all quality levels, with rotation, zoom, front/back/top/bottom, auto rotation, reset and fullscreen.
 
 ## Provenance and limits
 
@@ -30,3 +30,7 @@ Dimensions, folds and closure are reference-based estimates, not physically meas
 ## Validation
 
 `npm run build` succeeds. `npm test` includes a GLB regression check for embedded images, PBR maps, material regions, UV coverage and the editable Blender source. Browser screenshots under `docs/visuals/milk-1l/` show front/back/top/bottom and mobile inspection. `node scripts/milk-viewer-browser-test.mjs` uses isolated frontend 5175/API 3002, checks actual size switching and the live shelf asset request. The test creates and removes a temporary local inspection harness; production users open the in-store inspection panel.
+
+## Exact default shelf position
+
+The one-litre Whole milk SKU is on **shelf 1 of 5 (the lowest shelf), on the wall-facing side of the left refrigerated unit in Section 04**, near the rear-left corner of the supermarket. Navigation stops farther back for lowest-shelf products so the shelf above does not hide them at standing eye height; the arrival hint states the shelf level. Look down. `npm run test:milk-shelf` verifies four detailed milk facings on Low graphics and captures `docs/visuals/milk-1l/shelf-location.png`. Positions continue to follow live staff-managed catalogue locations.

@@ -30,7 +30,8 @@
     "assets:water": "blender --background --python scripts/model-water-bottle.py",
     "test:water-viewer": "node scripts/water-viewer-browser-test.mjs",
     "assets:milk": "blender --background --python scripts/model-milk-carton.py",
-    "test:milk-viewer": "node scripts/milk-viewer-browser-test.mjs"
+    "test:milk-viewer": "node scripts/milk-viewer-browser-test.mjs",
+    "test:milk-shelf": "node scripts/milk-shelf-visibility-test.mjs"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.7",

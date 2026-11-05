@@ -1,6 +1,6 @@
 import {useEffect,useMemo,useRef,useSyncExternalStore} from 'react';
 import {productViewerAssets} from '../catalogue/viewerAssets';
-import {premiumAsset,premiumDisplaySize} from './PremiumProduct';
+import {premiumAsset,premiumDisplaySize,showDetailedShelfModel} from './PremiumProduct';
 import {NearbyProducts} from './NearbyProducts';
 import {packagingAtlas} from './liveArtwork';
 import {useFrame,useThree} from '@react-three/fiber';
@@ -28,7 +28,7 @@ function Batch({type,placements,art,indexes}:{type:ModelType;placements:ProductP
   const s=useExplorer.getState(),key=`${Math.floor(camera.position.x/2)}:${Math.floor(camera.position.z/2)}:${s.settings.quality}`;
   if(!dirty.current&&cell.current===key)return;if(!dirty.current&&performance.now()-last.current<220)return;last.current=performance.now();cell.current=key;dirty.current=false;
   const range=s.settings.quality==='low'?28:s.settings.quality==='medium'?38:65;
-  active.current=placements.filter(p=>{const distance=Math.hypot(camera.position.x-p.position[0],camera.position.z-p.position[2]);return !(p.copy===0&&distance<6&&s.settings.quality!=='low'&&premiumAsset(p.product))&&p.copy<useShopping.getState().shelfAvailable(p.product.id)&&distance<range&&(distance<13||s.settings.quality==='high'||p.copy%4===0);});
+  active.current=placements.filter(p=>{const distance=Math.hypot(camera.position.x-p.position[0],camera.position.z-p.position[2]);return !(showDetailedShelfModel(p.product,p.copy,s.settings.quality)&&distance<6&&premiumAsset(p.product))&&p.copy<useShopping.getState().shelfAvailable(p.product.id)&&distance<range&&(distance<13||s.settings.quality==='high'||p.copy%4===0);});
   const rects=geometry.getAttribute('atlasRect') as InstancedBufferAttribute;
   active.current.forEach((p,i)=>{matrix.makeRotationY(p.rotation).scale(scale.set(...premiumDisplaySize(p.product,p.size))).setPosition(...p.position);mesh.current!.setMatrixAt(i,matrix);mesh.current!.setColorAt(i,color.set(productViewerAssets[p.product.id]?.kind==='embedded'?'#ffffff':productViewerAssets[p.product.id]?'#d9edf5':p.product.color));const n=(indexes.get(p.product.id)||0)*2;rects.setXYZW(i,(n%art.columns)/art.columns,1-(Math.floor(n/art.columns)+1)/art.rows,1/art.columns,1/art.rows);});
   mesh.current!.count=active.current.length;mesh.current!.userData.products=active.current.map(p=>p.product.id);mesh.current!.userData.copies=active.current.map(p=>p.copy);mesh.current!.instanceMatrix.needsUpdate=true;if(mesh.current!.instanceColor)mesh.current!.instanceColor.needsUpdate=true;rects.needsUpdate=true;mesh.current!.computeBoundingSphere();

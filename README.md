@@ -210,3 +210,7 @@ Repeated fixtures/products use shared geometries, materials and instancing. Dist
 ### 330 ml aluminium can study
 
 Open `/can-330ml.html` for a standalone rotating inspection page and GLB download. See [CAN_330ML.md](CAN_330ML.md) for Blender sources, regeneration, dimensions and artwork accuracy limits. The model is also available on the Cola · 330 ml shelf in Section 06 and in its product inspection panel.
+
+### Whole milk · 1 litre
+
+The reference-based DairyPure carton is on the **Whole milk · 1 litre** shelf in **Section 04 — Dairy, Chilled & Frozen**. Search Whole milk with F, follow Find in store, then inspect with E. See [MILK_1L.md](MILK_1L.md) for Blender/GLB paths, rendering and accuracy limits. Other sizes retain their own models.

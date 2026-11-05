@@ -7,10 +7,11 @@ function wrapped(c:CanvasRenderingContext2D,text:string,x:number,y:number,width:
 export function packagingAtlas(items:Product[],columns=32,tileSize=128){
  const rows=Math.max(1,Math.ceil(items.length*2/columns));const tile=Math.min(tileSize,Math.floor(4096/Math.max(columns,rows)));
  const canvas=document.createElement('canvas');canvas.width=columns*tile;canvas.height=rows*tile;const c=canvas.getContext('2d')!;
- items.forEach((p,index)=>{const wrap=productViewerAssets[p.id]?waterLabel(p):null;for(const back of [false,true]){
+ items.forEach((p,index)=>{const wrap=productViewerAssets[p.id]&&!productViewerAssets[p.id].kind?waterLabel(p):null;for(const back of [false,true]){
   const i=index*2+(back?1:0),x=i%columns*tile,y=Math.floor(i/columns)*tile;
   c.save();c.translate(x,y);c.scale(tile/256,tile/256);
   if(wrap){c.drawImage(wrap.image,back?1024:0,0,1024,768,0,0,256,256);c.restore();continue;}
+  if(p.id==='d7-028'){c.fillStyle='#ba030c';c.fillRect(0,0,256,256);c.fillStyle='white';c.font='italic bold 40px Georgia';c.fillText(back?'Coke':'Coca-Cola',12,112,232);c.font='bold 15px Arial';c.fillText(back?'REFERENCE ARTWORK':'ORIGINAL TASTE',22,156);c.fillText('330 ml',96,225);c.restore();continue;}
   const colour=p.color||'#396851';const gradient=c.createLinearGradient(0,0,256,256);gradient.addColorStop(0,colour);gradient.addColorStop(1,'#142e35');c.fillStyle=gradient;c.fillRect(0,0,256,256);
   c.globalAlpha=.12;c.strokeStyle='white';c.lineWidth=2;for(let j=0;j<8;j++){c.beginPath();c.ellipse(190,220,80+j*14,50+j*12,-.5,0,Math.PI*2);c.stroke();}c.globalAlpha=1;
   c.fillStyle='#fffdf4';c.font='bold 17px Arial';wrapped(c,p.brand.toUpperCase(),17,27,220,19,2);

@@ -37,7 +37,7 @@ function ImportedProduct({product,resolution=512}:{product:Product;resolution?:n
    for(const map of [normal,rough]){map.wrapS=map.wrapT=RepeatWrapping;map.repeat.set(3,3);map.needsUpdate=true;textures.push(map);}
    material.normalMap=normal;material.normalScale=new Vector2(.12,.12);material.roughnessMap=rough;
 
-   if(productViewerAssets[product.id]){material.normalMap=null;material.roughnessMap=null;}
+   if(productViewerAssets[product.id]){material.normalMap=source.normalMap;material.normalScale.copy(source.normalScale);material.roughnessMap=source.roughnessMap;}
    if(object.name==='WaterWrapLabel'){const texture=waterLabel(product);textures.push(texture);material.map=texture;material.color.set('white');material.roughness=.28;material.metalness=0;}
    else if(object.name.startsWith('Label')){const texture=art.texture.clone();texture.flipY=false;texture.repeat.set(.5,1);texture.offset.x=object.name.startsWith('LabelBack')?.5:0;texture.needsUpdate=true;textures.push(texture);material.map=texture;material.color.set('white');material.roughness=.57;material.metalness=0;}
    else if(material.name.startsWith('Printed lacquer')){material.color.set(product.color);material.metalness=.12;material.roughness=.38;}

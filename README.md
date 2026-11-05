@@ -209,4 +209,4 @@ Repeated fixtures/products use shared geometries, materials and instancing. Dist
 
 ### 330 ml aluminium can study
 
-Open `/can-330ml.html` for a standalone rotating inspection page and GLB download. See [CAN_330ML.md](CAN_330ML.md) for Blender sources, regeneration, dimensions and artwork accuracy limits. This reference study does not replace fictional catalogue products.
+Open `/can-330ml.html` for a standalone rotating inspection page and GLB download. See [CAN_330ML.md](CAN_330ML.md) for Blender sources, regeneration, dimensions and artwork accuracy limits. The model is also available on the Cola · 330 ml shelf in Section 06 and in its product inspection panel.

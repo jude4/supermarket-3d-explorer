@@ -2,7 +2,7 @@
 
 A real-time, first-person supermarket built with React, TypeScript, Three.js, React Three Fiber and Rapier. Walk through automatic sliding doors, inspect 3D products, select SKU variations, search the store, follow walking directions, and use traditional or self-checkout stations. The inventory extension adds a NestJS API, PostgreSQL, Prisma, database-backed carts and a staff operations workspace.
 
-The sample catalogue contains **297 parent products and 328 independent SKUs**, including 17 families with multiple variations. All 299 original SKU identifiers are preserved. Products, packaging and brands are fictional. Checkout records a simulated sale; it does not charge a card or connect to a payment provider.
+The sample catalogue contains **298 parent products and 329 independent SKUs**, including 17 families with multiple variations. All 299 original SKU identifiers are preserved. Products, packaging and brands are fictional. Checkout records a simulated sale; it does not charge a card or connect to a payment provider.
 
 ## Local setup
 
@@ -214,3 +214,7 @@ Open `/can-330ml.html` for a standalone rotating inspection page and GLB downloa
 ### Whole milk · 1 litre
 
 The reference-based DairyPure carton is on the **Whole milk · 1 litre** shelf in **Section 04 — Dairy, Chilled & Frozen**. Search Whole milk with F, follow Find in store, then inspect with E. See [MILK_1L.md](MILK_1L.md) for Blender/GLB paths, rendering and accuracy limits. Other sizes retain their own models.
+
+### Morning Valley Original Corn Flakes · 500 g
+
+Search **Morning Valley** in **Section 02 — Bakery & Breakfast**, shelf 3 of 5, then inspect with E. This is a separate 500 g SKU; the existing 400 g Cornflakes remains unchanged. Includes the multi-angle reference sheet, Blender source, embedded-PBR GLB and all-angle viewer. Both Vercel and Render must deploy the update to show the new API-backed item. See [MORNING_VALLEY_500G.md](MORNING_VALLEY_500G.md).

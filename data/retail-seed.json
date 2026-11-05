@@ -3496,6 +3496,13 @@
       "inspectionPath": "/products/inspection/container-1l.png",
       "texturePath": "/products/packaging-atlas.png",
       "atlasIndex": 327
+    },
+    {
+      "id": "media-morning-valley-cornflakes-500g",
+      "imagePath": "/products/images/morning-valley-cornflakes-500g.png",
+      "inspectionPath": "/products/inspection/morning-valley-cornflakes-500g.png",
+      "texturePath": "/products/packaging-atlas.png",
+      "atlasIndex": 328
     }
   ],
   "products": [
@@ -7358,6 +7365,19 @@
       "storage": "Keep clean and dry.",
       "origin": "Fictional demo origin",
       "requiresExpiry": false,
+      "active": true
+    },
+    {
+      "id": "product-morning-valley-cornflakes",
+      "name": "Original Corn Flakes",
+      "brand": "Morning Valley",
+      "departmentId": 2,
+      "categoryId": "d2-breakfast",
+      "subcategoryId": "d2-breakfast-cereals-oats",
+      "description": "Morning Valley Original Corn Flakes in a 500 g cardboard box. Fictional demonstration breakfast cereal.",
+      "storage": "Store in a cool, dry place.",
+      "origin": "Fictional demo origin",
+      "requiresExpiry": true,
       "active": true
     }
   ],
@@ -12954,6 +12974,23 @@
         0.09,
         0.14
       ]
+    },
+    {
+      "id": "variation-morning-valley-cornflakes-500g",
+      "productId": "product-morning-valley-cornflakes",
+      "name": "Original Corn Flakes · 500 g",
+      "attributes": {
+        "productType": "Original Corn Flakes",
+        "packagingType": "box",
+        "weight": "500 g"
+      },
+      "modelId": "model-box",
+      "mediaId": "media-morning-valley-cornflakes-500g",
+      "dimensions": [
+        0.2,
+        0.3,
+        0.06
+      ]
     }
   ],
   "skus": [
@@ -17548,6 +17585,20 @@
       "reorderThreshold": 8,
       "inventoryLocationId": "shelf-d5-f0-s1-l3",
       "active": true
+    },
+    {
+      "id": "morning-valley-cornflakes-500g",
+      "variantId": "variation-morning-valley-cornflakes-500g",
+      "variationId": "variation-morning-valley-cornflakes-500g",
+      "sku": "SE-MORNING-VALLEY-CORNFLAKES-500G",
+      "productId": "product-morning-valley-cornflakes",
+      "barcode": "2900000003293",
+      "priceCents": 899,
+      "costCents": 566,
+      "currency": "RON",
+      "reorderThreshold": 8,
+      "inventoryLocationId": "shelf-d2-f1-s0-l2",
+      "active": true
     }
   ],
   "barcodes": [
@@ -19517,6 +19568,12 @@
       "id": "barcode-container-1l",
       "skuId": "container-1l",
       "value": "2900000003286",
+      "type": "EAN13"
+    },
+    {
+      "id": "barcode-morning-valley-cornflakes-500g",
+      "skuId": "morning-valley-cornflakes-500g",
+      "value": "2900000003293",
       "type": "EAN13"
     }
   ],
@@ -40857,6 +40914,71 @@
       "reservedStock": 0,
       "availableStock": 36,
       "stockStatus": "IN_STOCK"
+    },
+    {
+      "id": "morning-valley-cornflakes-500g",
+      "name": "Original Corn Flakes · 500 g",
+      "brand": "Morning Valley",
+      "department": 2,
+      "category": "Breakfast",
+      "priceCents": 899,
+      "currency": "RON",
+      "unit": "500 g",
+      "description": "Morning Valley Original Corn Flakes in a 500 g cardboard box. Fictional demonstration breakfast cereal.",
+      "stockQuantity": 36,
+      "modelType": "box",
+      "color": "#e4b833",
+      "dimensions": [
+        0.2,
+        0.3,
+        0.06
+      ],
+      "imagePath": "/products/images/morning-valley-cornflakes-500g.png",
+      "inspectionPath": "/products/inspection/morning-valley-cornflakes-500g.png",
+      "atlasIndex": 328,
+      "shelfLocation": {
+        "fixture": 1,
+        "side": 0,
+        "level": 2,
+        "slot": 1
+      },
+      "isPromoted": false,
+      "discountPercent": 0,
+      "storage": "Store in a cool, dry place.",
+      "origin": "Fictional demo origin",
+      "ingredients": "Sample composition only; consult real packaging for actual ingredients.",
+      "allergens": "Sample allergen information is not suitable for dietary decisions.",
+      "barcode": "2900000003293",
+      "legacyId": null,
+      "categoryId": "d2-breakfast",
+      "subcategory": "Cereals & oats",
+      "subcategoryId": "d2-breakfast-cereals-oats",
+      "sku": "SE-MORNING-VALLEY-CORNFLAKES-500G",
+      "costCents": 566,
+      "reorderThreshold": 8,
+      "active": true,
+      "productId": "product-morning-valley-cornflakes",
+      "productName": "Original Corn Flakes",
+      "variantId": "variation-morning-valley-cornflakes-500g",
+      "productVariantId": "variation-morning-valley-cornflakes-500g",
+      "variationId": "variation-morning-valley-cornflakes-500g",
+      "modelId": "model-box",
+      "mediaId": "media-morning-valley-cornflakes-500g",
+      "inventoryLocationId": "shelf-d2-f1-s0-l2",
+      "locationId": "shelf-d2-f1-s0-l2",
+      "attributes": {
+        "productType": "Original Corn Flakes",
+        "packagingType": "box",
+        "weight": "500 g"
+      },
+      "requiresExpiry": true,
+      "rotationPolicy": "FEFO",
+      "rotation": "FEFO",
+      "shelfStock": 16,
+      "backroomStock": 20,
+      "reservedStock": 0,
+      "availableStock": 36,
+      "stockStatus": "IN_STOCK"
     }
   ],
   "locations": [
@@ -45478,6 +45600,16 @@
     },
     {
       "skuId": "container-1l",
+      "totalStock": 36,
+      "availableStock": 36,
+      "reservedStock": 0,
+      "shelfStock": 16,
+      "backroomStock": 20,
+      "reorderThreshold": 8,
+      "stockStatus": "IN_STOCK"
+    },
+    {
+      "skuId": "morning-valley-cornflakes-500g",
       "totalStock": 36,
       "availableStock": 36,
       "reservedStock": 0,
@@ -62130,6 +62262,57 @@
       "bestBeforeOffsetDays": null,
       "receivedOffsetDays": -1,
       "manufacturedOffsetDays": null
+    },
+    {
+      "id": "batch-morning-valley-cornflakes-500g-A",
+      "skuId": "morning-valley-cornflakes-500g",
+      "batchNumber": "DEMO-SE-MORNING-VALLEY-CORNFLAKES-500G-A",
+      "locationId": "shelf-d2-f1-s0-l2",
+      "quantity": 8,
+      "remainingQuantity": 8,
+      "receivedQuantity": 8,
+      "manufacturedAt": "2026-10-28T05:54:33.953Z",
+      "receivedAt": "2026-10-31T05:54:33.953Z",
+      "expiryDate": "2026-11-06T05:54:33.953Z",
+      "bestBeforeDate": null,
+      "expiryOffsetDays": 3,
+      "bestBeforeOffsetDays": null,
+      "receivedOffsetDays": -3,
+      "manufacturedOffsetDays": -6
+    },
+    {
+      "id": "batch-morning-valley-cornflakes-500g-B",
+      "skuId": "morning-valley-cornflakes-500g",
+      "batchNumber": "DEMO-SE-MORNING-VALLEY-CORNFLAKES-500G-B",
+      "locationId": "shelf-d2-f1-s0-l2",
+      "quantity": 8,
+      "remainingQuantity": 8,
+      "receivedQuantity": 8,
+      "manufacturedAt": "2026-10-28T05:54:33.953Z",
+      "receivedAt": "2026-11-02T05:54:33.953Z",
+      "expiryDate": "2027-05-02T05:54:33.953Z",
+      "bestBeforeDate": null,
+      "expiryOffsetDays": 180,
+      "bestBeforeOffsetDays": null,
+      "receivedOffsetDays": -1,
+      "manufacturedOffsetDays": -6
+    },
+    {
+      "id": "batch-morning-valley-cornflakes-500g-C",
+      "skuId": "morning-valley-cornflakes-500g",
+      "batchNumber": "DEMO-SE-MORNING-VALLEY-CORNFLAKES-500G-C",
+      "locationId": "backroom-d2",
+      "quantity": 20,
+      "remainingQuantity": 20,
+      "receivedQuantity": 20,
+      "manufacturedAt": "2026-10-28T05:54:33.953Z",
+      "receivedAt": "2026-11-02T05:54:33.953Z",
+      "expiryDate": "2027-05-09T05:54:33.953Z",
+      "bestBeforeDate": null,
+      "expiryOffsetDays": 187,
+      "bestBeforeOffsetDays": null,
+      "receivedOffsetDays": -1,
+      "manufacturedOffsetDays": -6
     }
   ],
   "suppliers": [
@@ -64462,6 +64645,13 @@
       "supplierSku": "SUP-SE-CONTAINER-1L",
       "costCents": 1133,
       "leadTimeDays": 4
+    },
+    {
+      "supplierId": "supplier-fresh-fields",
+      "skuId": "morning-valley-cornflakes-500g",
+      "supplierSku": "SUP-SE-MORNING-VALLEY-CORNFLAKES-500G",
+      "costCents": 566,
+      "leadTimeDays": 2
     }
   ]
 }

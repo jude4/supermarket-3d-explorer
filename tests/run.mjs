@@ -6,3 +6,5 @@ import './premium-assets.test.mjs';
 import './water-viewer.test.mjs';
 
 import './milk-viewer.test.mjs';
+
+import './cereal-viewer.test.mjs';

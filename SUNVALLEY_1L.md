@@ -1,12 +1,12 @@
 # SunValley Orange Juice · 1 L
 
-Second item from the four-product request. The Morning Valley cereal is complete. PureGlow shampoo and CleanWave laundry liquid have not been started; wait for the user's go-ahead before the next item.
+Second item from the four-product request. The Morning Valley cereal is complete. PureGlow shampoo is documented in `PUREGLOW_400ML.md`; CleanWave laundry liquid awaits the user's go-ahead.
 
 ## Find it
 
 Press F, search **SunValley**, and select **Find in store**. Default location: **Section 06 — Beverages → Juices → Fruit juices**, **shelf 1 of 5 (lowest)**, on the left/wall-facing side of the left fixture. Stand at the navigation arrival point, look down and press E while aiming at the bottle. The inspector supports free rotation, zoom, front/back/top/bottom, auto rotation and fullscreen. Four primary shelf bottles use the detailed model nearby on every quality setting.
 
-The new independent SKU is `sunvalley-orange-juice-1l`. The existing Bright Break `d7-024` and 500 ml juice cartons are unchanged. Fresh seed: 299 parents, 330 SKUs, 11,884 initial sample units. The new demo SKU receives 16 shelf and 20 backroom units at RON 11.99. All 329 pre-existing static product records were compared and remain unchanged; database stock, prices and staff edits are preserved by the seed.
+The new independent SKU is `sunvalley-orange-juice-1l`. The existing Bright Break `d7-024` and 500 ml juice cartons are unchanged. At this item’s delivery, the fresh seed became 299 parents, 330 SKUs and 11,884 initial sample units. The new demo SKU receives 16 shelf and 20 backroom units at RON 11.99. All 329 pre-existing static product records were compared and remain unchanged; database stock, prices and staff edits are preserved by the seed.
 
 ## Assets and regeneration
 

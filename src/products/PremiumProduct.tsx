@@ -19,7 +19,7 @@ export function premiumAsset(p:Product){
  return null;
 }
 /** Keep featured authored packs identifiable across their primary shelf bay on every quality level. */
-export function showDetailedShelfModel(product:Product,copy:number,quality:string){return ['d4-001','morning-valley-cornflakes-500g','sunvalley-orange-juice-1l'].includes(product.id)?copy<4:copy===0&&quality!=='low';}
+export function showDetailedShelfModel(product:Product,copy:number,quality:string){return ['d4-001','morning-valley-cornflakes-500g','sunvalley-orange-juice-1l','pureglow-shampoo-400ml'].includes(product.id)?copy<4:copy===0&&quality!=='low';}
 /** Fit the authored silhouette within the catalogue's allocated shelf envelope without stretching. */
 export function premiumDisplaySize(p:Product,size=p.dimensions):[number,number,number]{
  const key=premiumAsset(p);const ratios:Record<string,[number,number,number]>={'water-bottle':[.28,1,.28],'drink-can':[.57,1,.57],'milk-carton':[.34,1,.34],'cereal-box':[.65,1,.2],'cleaning-spray':[.38,1,.23]};

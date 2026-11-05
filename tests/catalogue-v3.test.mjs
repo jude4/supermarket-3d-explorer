@@ -6,7 +6,7 @@ const old=JSON.parse(await readFile(new URL('../data/phase2-catalogue.json',impo
 const ids=records=>new Set(records.map(r=>r.id));
 test('seed preserves every original SKU while supplying exactly the final eight departments',()=>{
  assert.deepEqual(seed.departments.map(d=>d.name),['Fresh Produce','Bakery & Breakfast','Meat, Poultry & Seafood','Dairy, Chilled & Frozen','Kitchen & Pantry','Beverages','Snacks & Confectionery','Household, Cleaning & Toiletries']);
- assert.equal(seed.variants.length,330);
+ assert.equal(seed.variants.length,331);
  for(const p of old)assert.ok(seed.variants.some(v=>v.id===p.id),p.id);
  assert.ok(seed.variants.filter(v=>v.id.startsWith('d6-')).every(v=>v.department===4&&v.shelfLocation.fixture===1));
  assert.ok(seed.variants.filter(v=>v.id.startsWith('d4-')).every(v=>v.department===4&&v.shelfLocation.fixture===0));
@@ -15,8 +15,8 @@ test('seed preserves every original SKU while supplying exactly the final eight 
 });
 test('products, product variations, SKUs, barcodes, models and media are separate linked entities',()=>{
  const parents=ids(seed.products),variations=ids(seed.productVariants),models=ids(seed.models),media=ids(seed.media),skuIds=ids(seed.skus);
- assert.equal(skuIds.size,330);assert.equal(new Set(seed.skus.map(s=>s.sku)).size,330);
- assert.equal(new Set(seed.barcodes.map(b=>b.value)).size,330);
+ assert.equal(skuIds.size,331);assert.equal(new Set(seed.skus.map(s=>s.sku)).size,331);
+ assert.equal(new Set(seed.barcodes.map(b=>b.value)).size,331);
  for(const v of seed.productVariants){assert.ok(parents.has(v.productId));assert.ok(models.has(v.modelId));assert.ok(media.has(v.mediaId));assert.ok(v.dimensions.every(n=>n>0&&n<=.3));}
  for(const sku of seed.skus){assert.ok(variations.has(sku.variantId));assert.ok(sku.priceCents>sku.costCents);assert.ok(Number.isSafeInteger(sku.priceCents));}
  assert.ok(seed.products.filter(p=>seed.productVariants.filter(v=>v.productId===p.id).length>1).length>=12);

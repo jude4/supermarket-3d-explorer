@@ -1,6 +1,6 @@
 # Morning Valley Original Corn Flakes · 500 g
 
-This documents the first completed item from the four-product request. SunValley juice is documented in `SUNVALLEY_1L.md`. Shampoo and laundry detergent await the user's go-ahead.
+This documents the first completed item from the four-product request. SunValley juice is documented in `SUNVALLEY_1L.md`. PureGlow shampoo is documented in `PUREGLOW_400ML.md`; CleanWave laundry liquid awaits the user's go-ahead.
 
 ## Find it in the store
 

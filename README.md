@@ -2,7 +2,7 @@
 
 A real-time, first-person supermarket built with React, TypeScript, Three.js, React Three Fiber and Rapier. Walk through automatic sliding doors, inspect 3D products, select SKU variations, search the store, follow walking directions, and use traditional or self-checkout stations. The inventory extension adds a NestJS API, PostgreSQL, Prisma, database-backed carts and a staff operations workspace.
 
-The sample catalogue contains **299 parent products and 330 independent SKUs**, including 17 families with multiple variations. All 299 original SKU identifiers are preserved. Products, packaging and brands are fictional. Checkout records a simulated sale; it does not charge a card or connect to a payment provider.
+The sample catalogue contains **300 parent products and 331 independent SKUs**, including 17 families with multiple variations. All 299 original SKU identifiers are preserved. Products, packaging and brands are fictional. Checkout records a simulated sale; it does not charge a card or connect to a payment provider.
 
 ## Local setup
 
@@ -222,3 +222,7 @@ Search **Morning Valley** in **Section 02 — Bakery & Breakfast**, shelf 3 of 5
 ### SunValley Orange Juice · 1 L
 
 Search **SunValley** in **Section 06 — Beverages**, lowest shelf, and inspect with E. This is a new bottled SKU; Bright Break juice cartons retain their own identities. Includes an eight-view reference, hollow PET/liquid GLB, Blender source and all-angle inspection. Deploy both Vercel and Render for the new item. See [SUNVALLEY_1L.md](SUNVALLEY_1L.md).
+
+### PureGlow Hydrating Shampoo · 400 ml
+
+Search **PureGlow** in **Section 08 — Personal Care**, lowest shelf, and inspect with E. The new blue 400 ml pack includes a hinged flip-top with an **Open cap** button in the 360° viewer. Existing shampoos are unchanged. Deploy Vercel and Render for the new item. See [PUREGLOW_400ML.md](PUREGLOW_400ML.md).

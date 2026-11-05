@@ -10,3 +10,5 @@ import './milk-viewer.test.mjs';
 import './cereal-viewer.test.mjs';
 
 import './juice-viewer.test.mjs';
+
+import './shampoo-viewer.test.mjs';

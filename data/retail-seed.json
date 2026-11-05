@@ -3510,6 +3510,13 @@
       "inspectionPath": "/products/inspection/sunvalley-orange-juice-1l.png",
       "texturePath": "/products/packaging-atlas.png",
       "atlasIndex": 329
+    },
+    {
+      "id": "media-pureglow-shampoo-400ml",
+      "imagePath": "/products/images/pureglow-shampoo-400ml.png",
+      "inspectionPath": "/products/inspection/pureglow-shampoo-400ml.png",
+      "texturePath": "/products/packaging-atlas.png",
+      "atlasIndex": 330
     }
   ],
   "products": [
@@ -7398,6 +7405,19 @@
       "storage": "Store in a cool, dry place.",
       "origin": "Fictional demo origin",
       "requiresExpiry": true,
+      "active": true
+    },
+    {
+      "id": "product-pureglow-shampoo",
+      "name": "Hydrating Shampoo",
+      "brand": "PureGlow",
+      "departmentId": 8,
+      "categoryId": "d8-personal-care",
+      "subcategoryId": "d8-personal-care-hair-care",
+      "description": "PureGlow Hydrating Shampoo in a 400 ml satin blue bottle with a flip-top closure. Original fictional demonstration product.",
+      "storage": "Store in a cool, dry place.",
+      "origin": "Fictional demo origin",
+      "requiresExpiry": false,
       "active": true
     }
   ],
@@ -13029,6 +13049,24 @@
         0.25,
         0.075
       ]
+    },
+    {
+      "id": "variation-pureglow-shampoo-400ml",
+      "productId": "product-pureglow-shampoo",
+      "name": "Hydrating Shampoo · 400 ml",
+      "attributes": {
+        "productType": "Hydrating Shampoo",
+        "packagingType": "bottle",
+        "volume": "400 ml",
+        "fragrance": "Botanical"
+      },
+      "modelId": "model-bottle",
+      "mediaId": "media-pureglow-shampoo-400ml",
+      "dimensions": [
+        0.075,
+        0.21,
+        0.045
+      ]
     }
   ],
   "skus": [
@@ -17651,6 +17689,20 @@
       "reorderThreshold": 8,
       "inventoryLocationId": "shelf-d6-f0-s0-l0",
       "active": true
+    },
+    {
+      "id": "pureglow-shampoo-400ml",
+      "variantId": "variation-pureglow-shampoo-400ml",
+      "variationId": "variation-pureglow-shampoo-400ml",
+      "sku": "SE-PUREGLOW-SHAMPOO-400ML",
+      "productId": "product-pureglow-shampoo",
+      "barcode": "2900000003316",
+      "priceCents": 1499,
+      "costCents": 944,
+      "currency": "RON",
+      "reorderThreshold": 8,
+      "inventoryLocationId": "shelf-d8-f0-s1-l0",
+      "active": true
     }
   ],
   "barcodes": [
@@ -19632,6 +19684,12 @@
       "id": "barcode-sunvalley-orange-juice-1l",
       "skuId": "sunvalley-orange-juice-1l",
       "value": "2900000003309",
+      "type": "EAN13"
+    },
+    {
+      "id": "barcode-pureglow-shampoo-400ml",
+      "skuId": "pureglow-shampoo-400ml",
+      "value": "2900000003316",
       "type": "EAN13"
     }
   ],
@@ -41103,6 +41161,72 @@
       "reservedStock": 0,
       "availableStock": 36,
       "stockStatus": "IN_STOCK"
+    },
+    {
+      "id": "pureglow-shampoo-400ml",
+      "name": "Hydrating Shampoo · 400 ml",
+      "brand": "PureGlow",
+      "department": 8,
+      "category": "Personal Care",
+      "priceCents": 1499,
+      "currency": "RON",
+      "unit": "400 ml",
+      "description": "PureGlow Hydrating Shampoo in a 400 ml satin blue bottle with a flip-top closure. Original fictional demonstration product.",
+      "stockQuantity": 36,
+      "modelType": "bottle",
+      "color": "#148bc4",
+      "dimensions": [
+        0.075,
+        0.21,
+        0.045
+      ],
+      "imagePath": "/products/images/pureglow-shampoo-400ml.png",
+      "inspectionPath": "/products/inspection/pureglow-shampoo-400ml.png",
+      "atlasIndex": 330,
+      "shelfLocation": {
+        "fixture": 0,
+        "side": 1,
+        "level": 0,
+        "slot": 3
+      },
+      "isPromoted": false,
+      "discountPercent": 0,
+      "storage": "Store in a cool, dry place.",
+      "origin": "Fictional demo origin",
+      "ingredients": null,
+      "allergens": null,
+      "barcode": "2900000003316",
+      "legacyId": null,
+      "categoryId": "d8-personal-care",
+      "subcategory": "Hair care",
+      "subcategoryId": "d8-personal-care-hair-care",
+      "sku": "SE-PUREGLOW-SHAMPOO-400ML",
+      "costCents": 944,
+      "reorderThreshold": 8,
+      "active": true,
+      "productId": "product-pureglow-shampoo",
+      "productName": "Hydrating Shampoo",
+      "variantId": "variation-pureglow-shampoo-400ml",
+      "productVariantId": "variation-pureglow-shampoo-400ml",
+      "variationId": "variation-pureglow-shampoo-400ml",
+      "modelId": "model-bottle",
+      "mediaId": "media-pureglow-shampoo-400ml",
+      "inventoryLocationId": "shelf-d8-f0-s1-l0",
+      "locationId": "shelf-d8-f0-s1-l0",
+      "attributes": {
+        "productType": "Hydrating Shampoo",
+        "packagingType": "bottle",
+        "volume": "400 ml",
+        "fragrance": "Botanical"
+      },
+      "requiresExpiry": false,
+      "rotationPolicy": "FIFO",
+      "rotation": "FIFO",
+      "shelfStock": 16,
+      "backroomStock": 20,
+      "reservedStock": 0,
+      "availableStock": 36,
+      "stockStatus": "IN_STOCK"
     }
   ],
   "locations": [
@@ -45744,6 +45868,16 @@
     },
     {
       "skuId": "sunvalley-orange-juice-1l",
+      "totalStock": 36,
+      "availableStock": 36,
+      "reservedStock": 0,
+      "shelfStock": 16,
+      "backroomStock": 20,
+      "reorderThreshold": 8,
+      "stockStatus": "IN_STOCK"
+    },
+    {
+      "skuId": "pureglow-shampoo-400ml",
       "totalStock": 36,
       "availableStock": 36,
       "reservedStock": 0,
@@ -62498,6 +62632,57 @@
       "bestBeforeOffsetDays": 187,
       "receivedOffsetDays": -1,
       "manufacturedOffsetDays": -6
+    },
+    {
+      "id": "batch-pureglow-shampoo-400ml-A",
+      "skuId": "pureglow-shampoo-400ml",
+      "batchNumber": "DEMO-SE-PUREGLOW-SHAMPOO-400ML-A",
+      "locationId": "shelf-d8-f0-s1-l0",
+      "quantity": 8,
+      "remainingQuantity": 8,
+      "receivedQuantity": 8,
+      "manufacturedAt": null,
+      "receivedAt": "2026-10-31T05:54:33.953Z",
+      "expiryDate": null,
+      "bestBeforeDate": null,
+      "expiryOffsetDays": null,
+      "bestBeforeOffsetDays": null,
+      "receivedOffsetDays": -3,
+      "manufacturedOffsetDays": null
+    },
+    {
+      "id": "batch-pureglow-shampoo-400ml-B",
+      "skuId": "pureglow-shampoo-400ml",
+      "batchNumber": "DEMO-SE-PUREGLOW-SHAMPOO-400ML-B",
+      "locationId": "shelf-d8-f0-s1-l0",
+      "quantity": 8,
+      "remainingQuantity": 8,
+      "receivedQuantity": 8,
+      "manufacturedAt": null,
+      "receivedAt": "2026-11-02T05:54:33.953Z",
+      "expiryDate": null,
+      "bestBeforeDate": null,
+      "expiryOffsetDays": null,
+      "bestBeforeOffsetDays": null,
+      "receivedOffsetDays": -1,
+      "manufacturedOffsetDays": null
+    },
+    {
+      "id": "batch-pureglow-shampoo-400ml-C",
+      "skuId": "pureglow-shampoo-400ml",
+      "batchNumber": "DEMO-SE-PUREGLOW-SHAMPOO-400ML-C",
+      "locationId": "backroom-d8",
+      "quantity": 20,
+      "remainingQuantity": 20,
+      "receivedQuantity": 20,
+      "manufacturedAt": null,
+      "receivedAt": "2026-11-02T05:54:33.953Z",
+      "expiryDate": null,
+      "bestBeforeDate": null,
+      "expiryOffsetDays": null,
+      "bestBeforeOffsetDays": null,
+      "receivedOffsetDays": -1,
+      "manufacturedOffsetDays": null
     }
   ],
   "suppliers": [
@@ -64843,6 +65028,13 @@
       "skuId": "sunvalley-orange-juice-1l",
       "supplierSku": "SUP-SE-SUNVALLEY-ORANGE-JUICE-1L",
       "costCents": 755,
+      "leadTimeDays": 4
+    },
+    {
+      "supplierId": "supplier-kindred",
+      "skuId": "pureglow-shampoo-400ml",
+      "supplierSku": "SUP-SE-PUREGLOW-SHAMPOO-400ML",
+      "costCents": 944,
       "leadTimeDays": 4
     }
   ]

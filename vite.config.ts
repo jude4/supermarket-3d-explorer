@@ -1,3 +1,3 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-export default defineConfig({plugins:[react()],server:{proxy:{'/api':{target:process.env.API_PROXY_TARGET||'http://127.0.0.1:3001',changeOrigin:false}}},preview:{proxy:{'/api':{target:process.env.API_PROXY_TARGET||'http://127.0.0.1:3001',changeOrigin:false}}},build:{rollupOptions:{output:{manualChunks(id){if(id.includes('rapier'))return 'physics';if(id.includes('/three/'))return 'three';}}}}});
+export default defineConfig({plugins:[react()],server:{proxy:{'/api':{target:process.env.API_PROXY_TARGET||'http://127.0.0.1:3001',changeOrigin:false}}},preview:{proxy:{'/api':{target:process.env.API_PROXY_TARGET||'http://127.0.0.1:3001',changeOrigin:false}}},build:{rollupOptions:{input:{main:'index.html',can:'can-330ml.html'},output:{manualChunks(id){if(id.includes('rapier'))return 'physics';if(id.includes('/three/'))return 'three';}}}}});

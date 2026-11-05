@@ -206,3 +206,7 @@ blender --background --python scripts/model-fixtures.py
 Retail artwork generation uses DejaVu Sans from `/usr/share/fonts/truetype/dejavu/`. Pillow and Blender are authoring dependencies only. Original local footsteps, ventilation and door audio remain; equipment ambience and UI feedback use Web Audio and saved volume preferences.
 
 Repeated fixtures/products use shared geometries, materials and instancing. Distant product detail is reduced; inspection loads lazily; the paused/welcome scene renders on demand. Low quality removes shadows and caps resolution at 1×; medium caps at 1.5× and high at 2×. Rapier's embedded WebAssembly produces a large-chunk build warning. Physical-phone and real-GPU performance testing remains a release check. PostgreSQL backups, HTTPS ingress and a production payment provider are deployment responsibilities; no real payment integration is included.
+
+### 330 ml aluminium can study
+
+Open `/can-330ml.html` for a standalone rotating inspection page and GLB download. See [CAN_330ML.md](CAN_330ML.md) for Blender sources, regeneration, dimensions and artwork accuracy limits. This reference study does not replace fictional catalogue products.

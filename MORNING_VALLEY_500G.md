@@ -1,12 +1,12 @@
 # Morning Valley Original Corn Flakes · 500 g
 
-This is the first item from the four-product request. Juice, shampoo and laundry detergent have **not** been started; wait for the user's go-ahead before proceeding to the next item.
+This documents the first completed item from the four-product request. SunValley juice is documented in `SUNVALLEY_1L.md`. Shampoo and laundry detergent await the user's go-ahead.
 
 ## Find it in the store
 
 Press F, search **Morning Valley**, and select **Find in store**. The default location is **Section 02 — Bakery & Breakfast → Breakfast → Cereals & oats**, shelf **3 of 5**, on the left-facing side of the right fixture. Aim at the box and press E for free rotation, zoom, front/back/top/bottom, automatic rotation and fullscreen. Four primary boxes use the detailed model nearby even on Low graphics. Other/far facings use a lightweight matching representation.
 
-This is a new independent 500 g SKU, `morning-valley-cornflakes-500g`, with the Morning Valley fictional brand. The existing `d2-018` Cornflakes is **400 g** and remains unchanged. Fresh seed totals: 298 parent products, 329 SKUs, 11,848 initial units. The new sample pack starts with 16 shelf and 20 backroom units at a demo price of RON 8.99. Existing database prices, locations, stock and staff edits are preserved by the idempotent seed.
+This is a new independent 500 g SKU, `morning-valley-cornflakes-500g`, with the Morning Valley fictional brand. The existing `d2-018` Cornflakes is **400 g** and remains unchanged. At this item’s delivery, fresh seed totals became 298 parent products, 329 SKUs and 11,848 initial units. The new sample pack starts with 16 shelf and 20 backroom units at a demo price of RON 8.99. Existing database prices, locations, stock and staff edits are preserved by the idempotent seed.
 
 ## Assets
 

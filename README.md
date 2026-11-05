@@ -2,7 +2,7 @@
 
 A real-time, first-person supermarket built with React, TypeScript, Three.js, React Three Fiber and Rapier. Walk through automatic sliding doors, inspect 3D products, select SKU variations, search the store, follow walking directions, and use traditional or self-checkout stations. The inventory extension adds a NestJS API, PostgreSQL, Prisma, database-backed carts and a staff operations workspace.
 
-The sample catalogue contains **298 parent products and 329 independent SKUs**, including 17 families with multiple variations. All 299 original SKU identifiers are preserved. Products, packaging and brands are fictional. Checkout records a simulated sale; it does not charge a card or connect to a payment provider.
+The sample catalogue contains **299 parent products and 330 independent SKUs**, including 17 families with multiple variations. All 299 original SKU identifiers are preserved. Products, packaging and brands are fictional. Checkout records a simulated sale; it does not charge a card or connect to a payment provider.
 
 ## Local setup
 
@@ -218,3 +218,7 @@ The reference-based DairyPure carton is on the **Whole milk · 1 litre** shelf i
 ### Morning Valley Original Corn Flakes · 500 g
 
 Search **Morning Valley** in **Section 02 — Bakery & Breakfast**, shelf 3 of 5, then inspect with E. This is a separate 500 g SKU; the existing 400 g Cornflakes remains unchanged. Includes the multi-angle reference sheet, Blender source, embedded-PBR GLB and all-angle viewer. Both Vercel and Render must deploy the update to show the new API-backed item. See [MORNING_VALLEY_500G.md](MORNING_VALLEY_500G.md).
+
+### SunValley Orange Juice · 1 L
+
+Search **SunValley** in **Section 06 — Beverages**, lowest shelf, and inspect with E. This is a new bottled SKU; Bright Break juice cartons retain their own identities. Includes an eight-view reference, hollow PET/liquid GLB, Blender source and all-angle inspection. Deploy both Vercel and Render for the new item. See [SUNVALLEY_1L.md](SUNVALLEY_1L.md).

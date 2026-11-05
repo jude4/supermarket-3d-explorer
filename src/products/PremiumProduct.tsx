@@ -19,7 +19,7 @@ export function premiumAsset(p:Product){
  return null;
 }
 /** Keep featured authored packs identifiable across their primary shelf bay on every quality level. */
-export function showDetailedShelfModel(product:Product,copy:number,quality:string){return ['d4-001','morning-valley-cornflakes-500g'].includes(product.id)?copy<4:copy===0&&quality!=='low';}
+export function showDetailedShelfModel(product:Product,copy:number,quality:string){return ['d4-001','morning-valley-cornflakes-500g','sunvalley-orange-juice-1l'].includes(product.id)?copy<4:copy===0&&quality!=='low';}
 /** Fit the authored silhouette within the catalogue's allocated shelf envelope without stretching. */
 export function premiumDisplaySize(p:Product,size=p.dimensions):[number,number,number]{
  const key=premiumAsset(p);const ratios:Record<string,[number,number,number]>={'water-bottle':[.28,1,.28],'drink-can':[.57,1,.57],'milk-carton':[.34,1,.34],'cereal-box':[.65,1,.2],'cleaning-spray':[.38,1,.23]};
@@ -40,6 +40,8 @@ function ImportedProduct({product,resolution=512}:{product:Product;resolution?:n
    material.normalMap=normal;material.normalScale=new Vector2(.12,.12);material.roughnessMap=rough;
 
    if(productViewerAssets[product.id]){material.normalMap=source.normalMap;material.normalScale.copy(source.normalScale);material.roughnessMap=source.roughnessMap;}
+   // Shelf LOD uses a cheap clear overlay; inspection uses layered refraction.
+   if(material.name==='Clear PET juice shell'){Object.assign(material,{transmission:0,transparent:true,opacity:.14,depthWrite:false});}
    if(object.name==='WaterWrapLabel'){const texture=waterLabel(product);textures.push(texture);material.map=texture;material.color.set('white');material.roughness=.28;material.metalness=0;}
    else if(object.name.startsWith('Label')){const texture=art.texture.clone();texture.flipY=false;texture.repeat.set(.5,1);texture.offset.x=object.name.startsWith('LabelBack')?.5:0;texture.needsUpdate=true;textures.push(texture);material.map=texture;material.color.set('white');material.roughness=.57;material.metalness=0;}
    else if(material.name.startsWith('Printed lacquer')){material.color.set(product.color);material.metalness=.12;material.roughness=.38;}

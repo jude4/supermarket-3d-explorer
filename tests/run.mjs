@@ -8,3 +8,5 @@ import './water-viewer.test.mjs';
 import './milk-viewer.test.mjs';
 
 import './cereal-viewer.test.mjs';
+
+import './juice-viewer.test.mjs';

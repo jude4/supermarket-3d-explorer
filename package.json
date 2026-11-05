@@ -33,7 +33,9 @@
     "test:milk-viewer": "node scripts/milk-viewer-browser-test.mjs",
     "test:milk-shelf": "node scripts/milk-shelf-visibility-test.mjs",
     "assets:cereal": "blender --background --python scripts/model-morning-valley.py",
-    "test:cereal-viewer": "node scripts/cereal-viewer-browser-test.mjs"
+    "test:cereal-viewer": "node scripts/cereal-viewer-browser-test.mjs",
+    "assets:juice": "blender --background --python scripts/model-sunvalley-juice.py",
+    "test:juice-viewer": "node scripts/juice-viewer-browser-test.mjs"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.7",

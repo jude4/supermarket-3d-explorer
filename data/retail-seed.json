@@ -3503,6 +3503,13 @@
       "inspectionPath": "/products/inspection/morning-valley-cornflakes-500g.png",
       "texturePath": "/products/packaging-atlas.png",
       "atlasIndex": 328
+    },
+    {
+      "id": "media-sunvalley-orange-juice-1l",
+      "imagePath": "/products/images/sunvalley-orange-juice-1l.png",
+      "inspectionPath": "/products/inspection/sunvalley-orange-juice-1l.png",
+      "texturePath": "/products/packaging-atlas.png",
+      "atlasIndex": 329
     }
   ],
   "products": [
@@ -7375,6 +7382,19 @@
       "categoryId": "d2-breakfast",
       "subcategoryId": "d2-breakfast-cereals-oats",
       "description": "Morning Valley Original Corn Flakes in a 500 g cardboard box. Fictional demonstration breakfast cereal.",
+      "storage": "Store in a cool, dry place.",
+      "origin": "Fictional demo origin",
+      "requiresExpiry": true,
+      "active": true
+    },
+    {
+      "id": "product-sunvalley-orange-juice",
+      "name": "Orange Juice",
+      "brand": "SunValley",
+      "departmentId": 6,
+      "categoryId": "d6-juices",
+      "subcategoryId": "d6-juices-fruit-juices",
+      "description": "SunValley Orange Juice in a 1 L PET bottle with an orange screw cap. Original fictional demonstration product.",
       "storage": "Store in a cool, dry place.",
       "origin": "Fictional demo origin",
       "requiresExpiry": true,
@@ -12991,6 +13011,24 @@
         0.3,
         0.06
       ]
+    },
+    {
+      "id": "variation-sunvalley-orange-juice-1l",
+      "productId": "product-sunvalley-orange-juice",
+      "name": "Orange Juice · 1 L",
+      "attributes": {
+        "productType": "Orange Juice",
+        "packagingType": "bottle",
+        "volume": "1 L",
+        "flavour": "Orange"
+      },
+      "modelId": "model-bottle",
+      "mediaId": "media-sunvalley-orange-juice-1l",
+      "dimensions": [
+        0.085,
+        0.25,
+        0.075
+      ]
     }
   ],
   "skus": [
@@ -17599,6 +17637,20 @@
       "reorderThreshold": 8,
       "inventoryLocationId": "shelf-d2-f1-s0-l2",
       "active": true
+    },
+    {
+      "id": "sunvalley-orange-juice-1l",
+      "variantId": "variation-sunvalley-orange-juice-1l",
+      "variationId": "variation-sunvalley-orange-juice-1l",
+      "sku": "SE-SUNVALLEY-ORANGE-JUICE-1L",
+      "productId": "product-sunvalley-orange-juice",
+      "barcode": "2900000003309",
+      "priceCents": 1199,
+      "costCents": 755,
+      "currency": "RON",
+      "reorderThreshold": 8,
+      "inventoryLocationId": "shelf-d6-f0-s0-l0",
+      "active": true
     }
   ],
   "barcodes": [
@@ -19574,6 +19626,12 @@
       "id": "barcode-morning-valley-cornflakes-500g",
       "skuId": "morning-valley-cornflakes-500g",
       "value": "2900000003293",
+      "type": "EAN13"
+    },
+    {
+      "id": "barcode-sunvalley-orange-juice-1l",
+      "skuId": "sunvalley-orange-juice-1l",
+      "value": "2900000003309",
       "type": "EAN13"
     }
   ],
@@ -40979,6 +41037,72 @@
       "reservedStock": 0,
       "availableStock": 36,
       "stockStatus": "IN_STOCK"
+    },
+    {
+      "id": "sunvalley-orange-juice-1l",
+      "name": "Orange Juice · 1 L",
+      "brand": "SunValley",
+      "department": 6,
+      "category": "Juices",
+      "priceCents": 1199,
+      "currency": "RON",
+      "unit": "1 L",
+      "description": "SunValley Orange Juice in a 1 L PET bottle with an orange screw cap. Original fictional demonstration product.",
+      "stockQuantity": 36,
+      "modelType": "bottle",
+      "color": "#eea510",
+      "dimensions": [
+        0.085,
+        0.25,
+        0.075
+      ],
+      "imagePath": "/products/images/sunvalley-orange-juice-1l.png",
+      "inspectionPath": "/products/inspection/sunvalley-orange-juice-1l.png",
+      "atlasIndex": 329,
+      "shelfLocation": {
+        "fixture": 0,
+        "side": 0,
+        "level": 0,
+        "slot": 1
+      },
+      "isPromoted": false,
+      "discountPercent": 0,
+      "storage": "Store in a cool, dry place.",
+      "origin": "Fictional demo origin",
+      "ingredients": "Sample composition only; consult real packaging for actual ingredients.",
+      "allergens": "Sample allergen information is not suitable for dietary decisions.",
+      "barcode": "2900000003309",
+      "legacyId": null,
+      "categoryId": "d6-juices",
+      "subcategory": "Fruit juices",
+      "subcategoryId": "d6-juices-fruit-juices",
+      "sku": "SE-SUNVALLEY-ORANGE-JUICE-1L",
+      "costCents": 755,
+      "reorderThreshold": 8,
+      "active": true,
+      "productId": "product-sunvalley-orange-juice",
+      "productName": "Orange Juice",
+      "variantId": "variation-sunvalley-orange-juice-1l",
+      "productVariantId": "variation-sunvalley-orange-juice-1l",
+      "variationId": "variation-sunvalley-orange-juice-1l",
+      "modelId": "model-bottle",
+      "mediaId": "media-sunvalley-orange-juice-1l",
+      "inventoryLocationId": "shelf-d6-f0-s0-l0",
+      "locationId": "shelf-d6-f0-s0-l0",
+      "attributes": {
+        "productType": "Orange Juice",
+        "packagingType": "bottle",
+        "volume": "1 L",
+        "flavour": "Orange"
+      },
+      "requiresExpiry": true,
+      "rotationPolicy": "FEFO",
+      "rotation": "FEFO",
+      "shelfStock": 16,
+      "backroomStock": 20,
+      "reservedStock": 0,
+      "availableStock": 36,
+      "stockStatus": "IN_STOCK"
     }
   ],
   "locations": [
@@ -45610,6 +45734,16 @@
     },
     {
       "skuId": "morning-valley-cornflakes-500g",
+      "totalStock": 36,
+      "availableStock": 36,
+      "reservedStock": 0,
+      "shelfStock": 16,
+      "backroomStock": 20,
+      "reorderThreshold": 8,
+      "stockStatus": "IN_STOCK"
+    },
+    {
+      "skuId": "sunvalley-orange-juice-1l",
       "totalStock": 36,
       "availableStock": 36,
       "reservedStock": 0,
@@ -62313,6 +62447,57 @@
       "bestBeforeOffsetDays": null,
       "receivedOffsetDays": -1,
       "manufacturedOffsetDays": -6
+    },
+    {
+      "id": "batch-sunvalley-orange-juice-1l-A",
+      "skuId": "sunvalley-orange-juice-1l",
+      "batchNumber": "DEMO-SE-SUNVALLEY-ORANGE-JUICE-1L-A",
+      "locationId": "shelf-d6-f0-s0-l0",
+      "quantity": 8,
+      "remainingQuantity": 8,
+      "receivedQuantity": 8,
+      "manufacturedAt": "2026-10-28T05:54:33.953Z",
+      "receivedAt": "2026-10-31T05:54:33.953Z",
+      "expiryDate": null,
+      "bestBeforeDate": "2026-11-06T05:54:33.953Z",
+      "expiryOffsetDays": null,
+      "bestBeforeOffsetDays": 3,
+      "receivedOffsetDays": -3,
+      "manufacturedOffsetDays": -6
+    },
+    {
+      "id": "batch-sunvalley-orange-juice-1l-B",
+      "skuId": "sunvalley-orange-juice-1l",
+      "batchNumber": "DEMO-SE-SUNVALLEY-ORANGE-JUICE-1L-B",
+      "locationId": "shelf-d6-f0-s0-l0",
+      "quantity": 8,
+      "remainingQuantity": 8,
+      "receivedQuantity": 8,
+      "manufacturedAt": "2026-10-28T05:54:33.953Z",
+      "receivedAt": "2026-11-02T05:54:33.953Z",
+      "expiryDate": null,
+      "bestBeforeDate": "2027-05-02T05:54:33.953Z",
+      "expiryOffsetDays": null,
+      "bestBeforeOffsetDays": 180,
+      "receivedOffsetDays": -1,
+      "manufacturedOffsetDays": -6
+    },
+    {
+      "id": "batch-sunvalley-orange-juice-1l-C",
+      "skuId": "sunvalley-orange-juice-1l",
+      "batchNumber": "DEMO-SE-SUNVALLEY-ORANGE-JUICE-1L-C",
+      "locationId": "backroom-d6",
+      "quantity": 20,
+      "remainingQuantity": 20,
+      "receivedQuantity": 20,
+      "manufacturedAt": "2026-10-28T05:54:33.953Z",
+      "receivedAt": "2026-11-02T05:54:33.953Z",
+      "expiryDate": null,
+      "bestBeforeDate": "2027-05-09T05:54:33.953Z",
+      "expiryOffsetDays": null,
+      "bestBeforeOffsetDays": 187,
+      "receivedOffsetDays": -1,
+      "manufacturedOffsetDays": -6
     }
   ],
   "suppliers": [
@@ -64652,6 +64837,13 @@
       "supplierSku": "SUP-SE-MORNING-VALLEY-CORNFLAKES-500G",
       "costCents": 566,
       "leadTimeDays": 2
+    },
+    {
+      "supplierId": "supplier-pantry-union",
+      "skuId": "sunvalley-orange-juice-1l",
+      "supplierSku": "SUP-SE-SUNVALLEY-ORANGE-JUICE-1L",
+      "costCents": 755,
+      "leadTimeDays": 4
     }
   ]
 }
